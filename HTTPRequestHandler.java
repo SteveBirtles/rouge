@@ -37,51 +37,51 @@ public class HTTPRequestHandler extends AbstractHandler {
         String requestText = "[ " + request.getRemoteAddr()  + "  |  " + df.format(dateobj) + "  |  ";
         requestText += request.getMethod() + " ] \t " + request.getRequestURI() + " \t ";
 
-        if (request.getQueryString() != null)
-        {
+        //         if (request.getQueryString() != null)
+        //         {
+        // 
+        //             String start = null;
+        //             String end = null;
+        //             String setposition = null;
+        //             int setvalue = 0;
+        //             String setunmoved = null;
+        // 
+        //             for(String q : request.getQueryString().split("&"))
+        //             {
+        //                 if (q.contains("=")) 
+        //                 {
+        //                     String variable = q.split("=")[0];
+        //                     String value = q.split("=")[1];
+        //                     requestText += "   " + variable + " = " + value; 
+        // 
+        //                     if (variable.equals("start")) start = value;
+        //                     if (variable.equals("end")) end = value;                    
+        //                     if (variable.equals("position")) setposition = value;
+        //                     try { if (variable.equals("value")) setvalue = Integer.parseInt(value); }
+        //                     catch (Exception ex) { System.out.println("Sync error - Can't convert " + value + " to integer."); }
+        //                     if (variable.equals("unmoved")) setunmoved = value;
+        //                 }
+        //                 else               
+        //                 {
+        //                     requestText += "   Invalid query string component (" + q + ")";
+        //                 }
+        //             }
+        // 
+        //             //             if (request.getRequestURI().contains("move"))
+        //             //             {
+        //             //                 if (start != null && end != null) board.doMove(start, end);
+        //             //             }
+        //             // 
+        //             //             if (request.getRequestURI().contains("set"))
+        //             //             {
+        //             //                 if (setposition != null && setunmoved != null) board.setSquare(setposition, setvalue, setunmoved.toLowerCase().equals("true"));
+        //             //             }
+        // 
+        //         }
+        //         else
+        //         {
+        requestText += "Hello client";
 
-            String start = null;
-            String end = null;
-            String setposition = null;
-            int setvalue = 0;
-            String setunmoved = null;
-
-            for(String q : request.getQueryString().split("&"))
-            {
-                if (q.contains("=")) 
-                {
-                    String variable = q.split("=")[0];
-                    String value = q.split("=")[1];
-                    requestText += "   " + variable + " = " + value; 
-
-                    if (variable.equals("start")) start = value;
-                    if (variable.equals("end")) end = value;                    
-                    if (variable.equals("position")) setposition = value;
-                    try { if (variable.equals("value")) setvalue = Integer.parseInt(value); }
-                    catch (Exception ex) { System.out.println("Sync error - Can't convert " + value + " to integer."); }
-                    if (variable.equals("unmoved")) setunmoved = value;
-                }
-                else               
-                {
-                    requestText += "   Invalid query string component (" + q + ")";
-                }
-            }
-
-            //             if (request.getRequestURI().contains("move"))
-            //             {
-            //                 if (start != null && end != null) board.doMove(start, end);
-            //             }
-            // 
-            //             if (request.getRequestURI().contains("set"))
-            //             {
-            //                 if (setposition != null && setunmoved != null) board.setSquare(setposition, setvalue, setunmoved.toLowerCase().equals("true"));
-            //             }
-
-        }
-        else
-        {
-            requestText += "   No query string supplied";
-        }
         System.out.println(requestText);
 
         response.getWriter().println(requestText);
