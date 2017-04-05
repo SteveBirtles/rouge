@@ -236,6 +236,8 @@ public class GameBoard extends JPanel implements ActionListener {
             for (int y = 0; y < 512; y++)                
             {
 
+                if (x + (int) cameraX >= 512 || y + (int) cameraY >= 512) continue;                 
+
                 if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
                 {
                     color = new Color(64,64,64);
@@ -260,7 +262,7 @@ public class GameBoard extends JPanel implements ActionListener {
         if (SwingFrame.server == null) return;
 
         String theGrid = null;
-        
+
         try
         {
             URL url = new URL( "http://" + SwingFrame.server + "/map");                        
@@ -275,9 +277,9 @@ public class GameBoard extends JPanel implements ActionListener {
         {
             System.out.println("HTTP GET ERROR: " + ex.getMessage());
         }
-        
+
         if (theGrid != null) maze = new Maze(512,512, theGrid);
-        
+
     }
 
     class KeyboardyMcKeyboardFace extends KeyAdapter {
