@@ -45,7 +45,7 @@ public class GameBoard extends JPanel implements ActionListener {
     {
         lastRequest = System.currentTimeMillis();
 
-        sprite = new BufferedImage[10];
+        sprite = new BufferedImage[11];
 
         try
         {
