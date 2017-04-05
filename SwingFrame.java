@@ -17,7 +17,7 @@ public class SwingFrame extends JFrame
     {
 
         if (SwingFrame.server == null) {
-            this.setSize(1920, 1080);
+            this.setSize(1024, 1024);
         }
         else {
             this.setSize(1280, 1024);

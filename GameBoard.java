@@ -25,19 +25,18 @@ import java.util.Random;
 
 public class GameBoard extends JPanel implements ActionListener {
 
+    public int[][] square;
+    public Maze maze = null;
+
     private Timer timer;
     private long lastRequest;
-
     private BufferedImage[] sprite;
-    private int[][] square;
-    private Maze maze;
     private int cursorX = 0, cursorY = 0;
     private double cameraX = 0, cameraY = 0;   
     private int selectedX = -1, selectedY;
     private double mouseX, mouseY;
     private boolean showcoords;
     private int[] lastMoved = null;
-
     private boolean connectionEstablished = false;
 
     public GameBoard() 
@@ -81,9 +80,9 @@ public class GameBoard extends JPanel implements ActionListener {
     {
         square = new int[1024][1024];        
 
-        maze = new Maze(1024,1024);
-
         if (SwingFrame.server == null) {
+
+            maze = new Maze(1024,1024);
 
             Random rnd = new Random();        
 
@@ -166,7 +165,7 @@ public class GameBoard extends JPanel implements ActionListener {
                         && x + (int) cameraX < 1024 
                         && y + (int) cameraY < 1024) {
 
-                            if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
+                            if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
                             {
                                 g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
                                 //                         if (x == cursorX && y == cursorY)
@@ -237,7 +236,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 for (int y = 0; y < 1024; y++)                
                 {
 
-                    if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
+                    if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
                     {
                         color = new Color(64,64,64);
                     } else {
@@ -245,7 +244,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
                     }
 
-                    canvas.setRGB(448 + x, 28 + y, color.getRGB());                       
+                    canvas.setRGB(x, y, color.getRGB());                       
 
                 }
             }
@@ -267,6 +266,10 @@ public class GameBoard extends JPanel implements ActionListener {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
+
+            String theGrid = con.getResponseMessage();
+
+            System.out.println(theGrid);
 
             connectionEstablished = true;
 
