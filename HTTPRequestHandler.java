@@ -36,7 +36,7 @@ public class HTTPRequestHandler extends AbstractHandler {
 
         StringBuilder responseText = new StringBuilder();
 
-        responseText.append(request.getRemoteAddr().split(".")[3]);
+        responseText.append(request.getRemoteAddr().split(".")[2]);
 
         responseText.append("~");
 
