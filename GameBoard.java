@@ -274,7 +274,7 @@ public class GameBoard extends JPanel implements ActionListener {
             theGrid = con.getInputStream().toString();        
 
             //theGrid = con.getResponseMessage();
-            System.out.println("THE GRID: " + theGrid.length()); 
+            System.out.println("THE GRID (" + theGrid.length() + ") " + theGrid); 
             connectionEstablished = true;
         }
         catch (Exception ex)
