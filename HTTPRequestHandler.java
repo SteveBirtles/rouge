@@ -32,7 +32,7 @@ public class HTTPRequestHandler extends AbstractHandler {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date dateobj = new Date();
-        System.out.println();
+        System.out.println("Request recieved from " + request.getRemoteAddr());
 
         StringBuilder responseText = new StringBuilder();
 
@@ -41,6 +41,8 @@ public class HTTPRequestHandler extends AbstractHandler {
                 responseText.append(Integer.toString(board.maze.getGrid()[x][y]));
             }
         }
+
+        System.out.println("Generated response OK, length: " + responseText.length());
 
         response.getWriter().println(responseText.toString());
 

@@ -259,6 +259,8 @@ public class GameBoard extends JPanel implements ActionListener {
 
         if (SwingFrame.server == null) return;
 
+        String theGrid = null;
+        
         try
         {
             URL url = new URL( "http://" + SwingFrame.server + "/map");                        
@@ -266,17 +268,16 @@ public class GameBoard extends JPanel implements ActionListener {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
-
-            String theGrid = con.getResponseMessage();
-            maze = new Maze(1024,1024, theGrid);
-
+            theGrid = con.getResponseMessage();            
             connectionEstablished = true;
-
         }
         catch (Exception ex)
         {
             System.out.println("HTTP GET ERROR: " + ex.getMessage());
         }
+        
+        if (theGrid != null) maze = new Maze(1024,1024, theGrid);
+        
     }
 
     class KeyboardyMcKeyboardFace extends KeyAdapter {

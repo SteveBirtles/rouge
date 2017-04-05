@@ -18,8 +18,8 @@ public class Maze{
         grid=new int[x][y];        
         int p=0;
 
-        System.out.println(input); //JANKY
-
+        System.out.println(input); //
+        
         char[] map = input.toCharArray();
 
         for(int i=0;i<x;i++){
