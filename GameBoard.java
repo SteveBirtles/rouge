@@ -48,7 +48,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
         try
         {
-            sprite[0] =   ImageIO.read(new File("res/Background/fancywall.png"));
+            sprite[0] =   ImageIO.read(new File("res/Background/dirt.png"));
             sprite[1] =   ImageIO.read(new File("res/Wizards/black.png"));
             sprite[2] =   ImageIO.read(new File("res/Wizards/blue.png"));
             sprite[3] =   ImageIO.read(new File("res/Wizards/green.png"));
