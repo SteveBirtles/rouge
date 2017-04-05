@@ -146,8 +146,8 @@ public class Maze{
                 }
                 roomsToRemove.remove((Integer)(i-1));
                 }*/
-            }
-        }
+            //}
+        //}
         /*for(int i=roomsToRemove.size();i>0;i--){
         //rooms.remove(rooms.get(i-1));
         }*/
