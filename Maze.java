@@ -12,20 +12,43 @@ public class Maze{
         generate(0);
     }
 
-    public Maze(int x, int y, String input){
+    public Maze(int x, int y, String input, int[][] square){
         height=y;
         width=x;
         grid=new int[x][y];        
         int p = 0;
 
-        int[] map = new int[x*y];        
-        String[] rle = input.split(",");
+        int[] map = new int[x*y];
+
+        String[] splitInput = input.split("|");
+        String[] wizd = splitInput[1].split(",");
+        String[] rle = splitInput[0].split(",");
+        int wizBit = 0;
+        int wizX = 0;
+        int wizY = 0;
+        int wizType = 0;
+        for(String s : wizd){
+            switch(wizBit){
+                case 0:
+                    wizX = Integer.parseInt(s);
+                    break;
+                case 1:
+                    wizY = Integer.parseInt(s);
+                    break;
+                case 2:
+                    wizType = Integer.parseInt(s);
+                    square[wizX][wizY] = wizType;
+                    wizBit = -1;
+                    break;
+            }
+            wizBit++;
+        }
 
         for (int i = 0; i < rle.length - 1; i += 2) {
             int value = Integer.parseInt(rle[i]);
             for (int j = 0; j < Integer.parseInt(rle[i + 1]); j++) {
                 if(p+1 > x*y){System.out.println("Error!!!!");break;}
-                    
+
                 map[p++] = value;
             }
         }

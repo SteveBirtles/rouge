@@ -298,7 +298,7 @@ public class GameBoard extends JPanel implements ActionListener {
             System.out.println("HTTP GET ERROR: " + ex.getMessage());
         }
 
-        if (theGrid != null) maze = new Maze(512,512, theGrid);
+        if (theGrid != null) maze = new Maze(512,512, theGrid, square);
 
     }
 

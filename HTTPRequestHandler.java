@@ -61,6 +61,22 @@ public class HTTPRequestHandler extends AbstractHandler {
             //System.out.print(Integer.toString(value) + ","+Integer.toString(repeats));
         }
 
+        responseText.append("|");
+        
+        for (int x = 0; x < 512; x++) {
+            for (int y = 0; y < 512; y++) {          
+                if(board.square[x][y] != 0){
+                    responseText.append(Integer.toString(x) + ","); 
+                    responseText.append(Integer.toString(y) + ",");
+                    responseText.append(Integer.toString(board.square[x][y]) + ",");
+                }
+            }
+            
+        }
+        
+        
+       
+        
         System.out.println("Generated response OK, length: " + responseText.length());
 
         response.getWriter().println(responseText.toString());
