@@ -59,6 +59,7 @@ public class GameBoard extends JPanel implements ActionListener {
             sprite[7] =   ImageIO.read(new File("res/Wizards/red.png"));
             sprite[8] =   ImageIO.read(new File("res/Wizards/white.png"));
             sprite[9] =   ImageIO.read(new File("res/Background/tile.png"));
+            sprite[10] =   ImageIO.read(new File("res/Background/tunnelFloor.png"));
         }
         catch (Exception ex)
         {
@@ -175,7 +176,7 @@ public class GameBoard extends JPanel implements ActionListener {
                                 //                         else
                                 //                             g.setPaint(new Color(180,180,180));                
                             }
-                            else
+                            else if(maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 2)
                             {
                                 g.drawImage (sprite[9], x * 64 - xNudge, y * 64 - yNudge, this);
 
@@ -185,6 +186,8 @@ public class GameBoard extends JPanel implements ActionListener {
                                 //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
                                 //                         else
                                 //                             g.setPaint(new Color(160,160,160));                
+                            }else{
+                                g.drawImage(sprite[10], x* 64 -xNudge,y*64 -yNudge, this);
                             }
 
                             //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
