@@ -287,21 +287,6 @@ public class GameBoard extends JPanel implements ActionListener {
             String[] gridyMcGridFace = theGrid.split("~");
             System.out.println("THE GRID " + gridyMcGridFace[0] + ": " + gridyMcGridFace[1].length() + ", " + gridyMcGridFace[2].length()); 
             connectionEstablished = true;
-
-            if (SwingFrame.player != 0) {
-                for (int x = 0; x < 512; x++)
-                {
-                    for (int y = 0; y < 512; y++)                
-                    {
-                        if (square[x][y] == SwingFrame.player) {
-                            cameraX = x - 10;
-                            cameraY = y - 8;
-                        }
-                    }
-
-                }
-            }
-
         }
         catch (Exception ex)
         {
@@ -309,6 +294,20 @@ public class GameBoard extends JPanel implements ActionListener {
         }
 
         if (theGrid != null) maze = new Maze(512,512, theGrid, square);
+
+        if (SwingFrame.player != 0) {
+            for (int x = 0; x < 512; x++)
+            {
+                for (int y = 0; y < 512; y++)                
+                {
+                    if (square[x][y] == SwingFrame.player) {
+                        cameraX = x - 10;
+                        cameraY = y - 8;
+                    }
+                }
+
+            }
+        }
 
     }
 
