@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=a\ b\ secret
+comment0.target=Tunnel(Room,\ Room,\ boolean)
+comment1.params=
+comment1.target=int\ getStartX()
+comment2.params=
+comment2.target=int\ getStartY()
+comment3.params=
+comment3.target=int\ getEndX()
+comment4.params=
+comment4.target=int\ getEndY()
+numComments=5

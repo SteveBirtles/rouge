@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.params=w\ h\ secret
+comment0.target=Room(int,\ int,\ boolean)
+comment1.params=sx\ sy
+comment1.target=void\ setPosition(int,\ int)
+comment2.params=
+comment2.target=int\ getStartX()
+comment3.params=
+comment3.target=int\ getStartY()
+comment4.params=
+comment4.target=int\ getEndX()
+comment5.params=
+comment5.target=int\ getEndY()
+comment6.params=
+comment6.target=int\ getHeight()
+comment7.params=
+comment7.target=int\ getWidth()
+comment8.params=rooms
+comment8.target=Room\ getNearestRoom(java.util.List)
+comment9.params=room
+comment9.target=int\ distanceToRoom(Room)
+numComments=10

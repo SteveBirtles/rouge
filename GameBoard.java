@@ -171,6 +171,14 @@ public class GameBoard extends JPanel implements ActionListener {
 
         cameraX += 0.25;
 
+        if (cameraX > 1100) {
+            cameraX = -1100;
+            cameraY = 1024;
+            if (cameraY > 1100) {
+                cameraY = 0;
+            }
+        }            
+
     }
 
     public void forceSync()
