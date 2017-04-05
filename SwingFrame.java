@@ -11,11 +11,19 @@ import javax.imageio.ImageIO;
 public class SwingFrame extends JFrame 
 {
 
+    public static boolean server = true;
     public static String opponent = null;
 
     public SwingFrame() 
     {
-        this.setSize(1280, 1024);
+
+        if (SwingFrame.server) {
+            this.setSize(1920, 1080);
+        }
+        else {
+            this.setSize(1280, 1024);
+        }            
+
         this.setUndecorated(true);
         this.setDefaultCloseOperation(3);
         this.setTitle("Pi Swing Chess");
@@ -33,16 +41,18 @@ public class SwingFrame extends JFrame
         GameBoard board = new GameBoard();
         this.add(board);
 
-        try
-        {
-            Server server = new Server(80);
-            server.setHandler(new HTTPRequestHandler(board));
-            server.start();
-            System.out.println("Server is live on " + HTTPRequestHandler.getMyNetworkAdapter());
-        }
-        catch (Exception ex)
-        {
-            System.out.println("Sever creation failed: " + ex.getMessage());
+        if (SwingFrame.server) {        
+            try
+            {
+                Server server = new Server(8080);
+                server.setHandler(new HTTPRequestHandler(board));
+                server.start();
+                System.out.println("Server is live on " + HTTPRequestHandler.getMyNetworkAdapter());
+            }
+            catch (Exception ex)
+            {
+                System.out.println("Sever creation failed: " + ex.getMessage());
+            }
         }
 
     }
@@ -50,7 +60,10 @@ public class SwingFrame extends JFrame
     public static void main(String[] args)
     {
 
-        if (args.length > 0) opponent= args[0];
+        if (args.length > 0) {
+            opponent = args[0];
+            server = false;
+        }
 
         SwingUtilities.invokeLater(new Runnable() 
             {

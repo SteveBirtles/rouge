@@ -39,7 +39,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
     public GameBoard() 
     {
-        sprite = new BufferedImage[9];
+        sprite = new BufferedImage[10];
 
         try
         {
@@ -52,6 +52,7 @@ public class GameBoard extends JPanel implements ActionListener {
             sprite[6] =   ImageIO.read(new File("res/Wizards/purple.png"));
             sprite[7] =   ImageIO.read(new File("res/Wizards/red.png"));
             sprite[8] =   ImageIO.read(new File("res/Wizards/white.png"));
+            sprite[9] =   ImageIO.read(new File("res/Background/tile.png"));
         }
         catch (Exception ex)
         {
@@ -115,73 +116,107 @@ public class GameBoard extends JPanel implements ActionListener {
 
         Graphics2D g = (Graphics2D) graphics;
 
-        int xNudge = (int) ((cameraX - (int) cameraX) * 64);
-        int yNudge = (int) ((cameraY - (int) cameraY) * 64);
+        if (!SwingFrame.server) {
 
-        for (int x = -1; x < 21; x++)
-        {
-            for (int y = 0; y < 17; y++)
+            int xNudge = (int) ((cameraX - (int) cameraX) * 64);
+            int yNudge = (int) ((cameraY - (int) cameraY) * 64);
+
+            for (int x = -1; x < 21; x++)
             {
+                for (int y = 0; y < 17; y++)
+                {
 
-                if (x + (int) cameraX >= 0 
-                && y + (int) cameraY >= 0 
-                && x + (int) cameraX < 1024 
-                && y + (int) cameraY < 1024) {
+                    if (x + (int) cameraX >= 0 
+                    && y + (int) cameraY >= 0 
+                    && x + (int) cameraX < 1024 
+                    && y + (int) cameraY < 1024) {
 
-                    if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
-                    {
-                        g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
-                        //                         if (x == cursorX && y == cursorY)
-                        //                             g.setPaint(new Color(180,180,64));                
-                        //                         else
-                        //                             g.setPaint(new Color(180,180,180));                
+                        if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
+                        {
+                            g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                            //                         if (x == cursorX && y == cursorY)
+                            //                             g.setPaint(new Color(180,180,64));                
+                            //                         else
+                            //                             g.setPaint(new Color(180,180,180));                
+                        }
+                        else
+                        {
+                            g.drawImage (sprite[9], x * 64 - xNudge, y * 64 - yNudge, this);
+
+                            //g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                            //                         if (x == cursorX && y == cursorY)
+                            //g.setPaint(new Color(64,64,64));  
+                            //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
+                            //                         else
+                            //                             g.setPaint(new Color(160,160,160));                
+                        }
+
+                        //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
+
+                        if (showcoords)
+                        {
+                            g.setPaint(new Color(192,192,192));
+                            //                     g.drawString(columns[x] + rows[y], 322 + x * 64, 142 + y * 64);
+                        }
+
+                        int here = 0;
+
+                        here = square[x + (int) cameraX][y + (int) cameraY];
+
+                        if (here > 0) g.drawImage (sprite[here], x * 64 - xNudge, y * 64 - yNudge, this);
+
+                        if (x == selectedX && y == selectedY)
+                        {
+                            g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                        }
+
                     }
-                    else
+                }
+
+            }
+            g.setPaint(new Color(255,255,255));
+            g.drawString(Double.toString(cameraX) + ", " + Double.toString(cameraY), 100, 100);
+
+            cameraX += 0.25;
+
+            if (cameraX > 1045) {
+                cameraX = -20;
+                cameraY += 16;
+                if (cameraY > 1024) {
+                    cameraY = 0;
+                }
+            }            
+
+        }
+        else
+
+        {
+
+            BufferedImage canvas = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
+
+            Color color;
+
+            for (int x = 0; x < 1024; x++)
+            {
+                for (int y = 0; y < 1024; y++)                
+                {
+
+                    if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
                     {
-                        //g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
-                        //                         if (x == cursorX && y == cursorY)
-                        g.setPaint(new Color(64,64,64));  
-                        g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
-                        //                         else
-                        //                             g.setPaint(new Color(160,160,160));                
+                        color = new Color(64,64,64);
+                    } else {
+                        color = new Color(255,255,255);
+
                     }
 
-                    //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
-
-                    if (showcoords)
-                    {
-                        g.setPaint(new Color(192,192,192));
-                        //                     g.drawString(columns[x] + rows[y], 322 + x * 64, 142 + y * 64);
-                    }
-
-                    int here = 0;
-
-                    here = square[x + (int) cameraX][y + (int) cameraY];
-
-                    if (here > 0) g.drawImage (sprite[here], x * 64 - xNudge, y * 64 - yNudge, this);
-
-                    if (x == selectedX && y == selectedY)
-                    {
-                        g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
-                    }
+                    canvas.setRGB(448 + x, 28 + y, color.getRGB());                       
 
                 }
             }
 
+            g.drawImage(canvas, null, null);
+
         }
-        g.setPaint(new Color(255,255,255));
-        g.drawString(Double.toString(cameraX) + ", " + Double.toString(cameraY), 100, 100);
-
-        cameraX += 0.25;
-
-        if (cameraX > 1045) {
-            cameraX = -20;
-            cameraY += 16;
-            if (cameraY > 1024) {
-                cameraY = 0;
-            }
-        }            
-
     }
 
     public void forceSync()
