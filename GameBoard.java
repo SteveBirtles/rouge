@@ -162,8 +162,8 @@ public class GameBoard extends JPanel implements ActionListener {
 
                         if (x + (int) cameraX >= 0 
                         && y + (int) cameraY >= 0 
-                        && x + (int) cameraX < 1024 
-                        && y + (int) cameraY < 1024) {
+                        && x + (int) cameraX < 512 
+                        && y + (int) cameraY < 512) {
 
                             if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
                             {
@@ -213,10 +213,10 @@ public class GameBoard extends JPanel implements ActionListener {
 
                 cameraX += 0.25;
 
-                if (cameraX > 1045) {
+                if (cameraX > 532) {
                     cameraX = -20;
                     cameraY += 16;
-                    if (cameraY > 1024) {
+                    if (cameraY > 532) {
                         cameraY = 0;
                     }
                 }            
@@ -231,9 +231,9 @@ public class GameBoard extends JPanel implements ActionListener {
 
         Color color;
 
-        for (int x = 0; x < 1024; x++)
+        for (int x = 0; x < 512; x++)
         {
-            for (int y = 0; y < 1024; y++)                
+            for (int y = 0; y < 512; y++)                
             {
 
                 if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
@@ -294,7 +294,7 @@ public class GameBoard extends JPanel implements ActionListener {
             if (keycode == 's' || keycode == 'S')
             {
                 cameraY += 1;
-                if (cameraY > 1024) cameraY = 1024;
+                if (cameraY > 512) cameraY = 512;
             }            
             if (keycode == 'a' || keycode == 'A') 
             {
@@ -304,7 +304,7 @@ public class GameBoard extends JPanel implements ActionListener {
             if (keycode == 'd' || keycode == 'D') 
             {
                 cameraX += 1;
-                if (cameraX > 1024) cameraX = 1024;
+                if (cameraX > 512) cameraX = 512;
             }            
 
             if (keycode == 'r' || keycode == 'R') 
