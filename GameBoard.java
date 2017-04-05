@@ -168,7 +168,7 @@ public class GameBoard extends JPanel implements ActionListener {
                         && x + (int) cameraX < 512 
                         && y + (int) cameraY < 512) {
 
-                            if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
+                            if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 0)
                             {
                                 g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
                                 //                         if (x == cursorX && y == cursorY)
@@ -176,7 +176,7 @@ public class GameBoard extends JPanel implements ActionListener {
                                 //                         else
                                 //                             g.setPaint(new Color(180,180,180));                
                             }
-                            else if(maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 2)
+                            else if(maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] ==1)
                             {
                                 g.drawImage (sprite[9], x * 64 - xNudge, y * 64 - yNudge, this);
 
