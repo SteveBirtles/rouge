@@ -270,7 +270,9 @@ public class GameBoard extends JPanel implements ActionListener {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
-            theGrid = con.getResponseMessage();            
+            
+            theGrid = con.getResponseMessage();
+            System.out.println("THE GRID: " + theGrid.length());
             connectionEstablished = true;
         }
         catch (Exception ex)
