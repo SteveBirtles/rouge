@@ -24,6 +24,8 @@ public class Maze{
         for (int i = 0; i < rle.length - 1; i += 2) {
             int value = Integer.parseInt(rle[i]);
             for (int j = 0; j < Integer.parseInt(rle[i + 1]); j++) {
+                if(p > x*y){break;}
+                    
                 map[p++] = value;
             }
         }
