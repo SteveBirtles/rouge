@@ -23,7 +23,18 @@ public class Maze{
 
         for(int i=0;i<x;i++){
             for(int j=0;j<y;j++){
-                grid[i][j] = map[p] - 48;
+
+                switch (map[p]) {
+                    case '0':
+                    grid[i][j] = 0;
+                    break;
+                    case '1':
+                    grid[i][j] = 1;
+                    break;
+                    case '2':
+                    grid[i][j] = 2;
+                    break;
+                }                
                 p++;
             }
         }
@@ -78,39 +89,6 @@ public class Maze{
 
         List<Integer> roomsToRemove=new ArrayList<>();
         for(int i=1;i<rooms.size();i++){
-          Tunnel nextTunnel=new Tunnel(rooms.get(i-1),rooms.get(i),false);
-          double dx=nextTunnel.getStartX()-nextTunnel.getEndX();
-          double dy=nextTunnel.getStartY()-nextTunnel.getEndY();
-          //System.out.println(nextTunnel.getStartX+" "+" "+i+" "+nextTunnel.getStartX());
-          double c=nextTunnel.getStartY()-(dy/dx)*nextTunnel.getStartX();
-          if(Math.abs(dy/dx)<1){
-            if(nextTunnel.getStartX()<nextTunnel.getEndX()){
-              for(int x=nextTunnel.getStartX();x<nextTunnel.getEndX();x++){
-                grid[x][(int)((dy/dx)*x+c)]=2;
-                grid[x][(int)((dy/dx)*x+c+1)]=2;
-              }
-            }else{
-              for(int x=nextTunnel.getStartX();x>nextTunnel.getEndX();x--){
-                grid[x][(int)((dy/dx)*x+c)]=2;
-                grid[x][(int)((dy/dx)*x+c+1)]=2;
-              }
-            }
-            if(roomsToRemove.contains(i-1)){
-              if(roomsToRemove.contains(i)){
-                roomsToRemove.remove((Integer)(i));
-              }
-              roomsToRemove.remove((Integer)(i-1));
-            }
-          }else{
-            roomsToRemove.add(i);
-          }
-        }
-        for(int i=roomsToRemove.size();i>0;i--){
-          //rooms.remove(rooms.get(i-1));
-        }
-
-        /*List<Integer> roomsToRemove=new ArrayList<>();
-        for(int i=1;i<rooms.size();i++){
             Tunnel nextTunnel=new Tunnel(rooms.get(i-1),rooms.get(i),false);
             double dx=nextTunnel.getStartX()-nextTunnel.getEndX();
             double dy=nextTunnel.getStartY()-nextTunnel.getEndY();
@@ -119,34 +97,67 @@ public class Maze{
             if(Math.abs(dy/dx)<1){
                 if(nextTunnel.getStartX()<nextTunnel.getEndX()){
                     for(int x=nextTunnel.getStartX();x<nextTunnel.getEndX();x++){
-                        grid[x][(int)((dy/dx)*x+c)]=1;
-                        if ((int)((dy/dx)*x+c+1) < 1024) grid[x][(int)((dy/dx)*x+c+1)]=1;
+                        grid[x][(int)((dy/dx)*x+c)]=2;
+                        grid[x][(int)((dy/dx)*x+c+1)]=2;
                     }
                 }else{
                     for(int x=nextTunnel.getStartX();x>nextTunnel.getEndX();x--){
-                        grid[x][(int)((dy/dx)*x+c)]=1;
-                        if ((int)((dy/dx)*x+c+1) < 1024) grid[x][(int)((dy/dx)*x+c+1)]=1;
+                        grid[x][(int)((dy/dx)*x+c)]=2;
+                        grid[x][(int)((dy/dx)*x+c+1)]=2;
                     }
                 }
-            }else{ // Steep gradient (treat var x as y)
-                if(nextTunnel.getStartX()<nextTunnel.getEndX()){
-                    for(int x=nextTunnel.getStartX();x<nextTunnel.getEndX();x++){
-                        grid[(int)((dx/dy)*x+c)][x]=1;
-                        if ((int)((dx/dy)*x+c+1) < 1024) grid[(int)((dx/dy)*x+c+1)][x]=1;
+                if(roomsToRemove.contains(i-1)){
+                    if(roomsToRemove.contains(i)){
+                        roomsToRemove.remove((Integer)(i));
                     }
-                }else{
-                    for(int x=nextTunnel.getStartX();x>nextTunnel.getEndX();x--){
-                        grid[x][(int)((dx/dy)*x+c)]=1;
-                        if ((int)((dx/dy)*x+c+1) < 1024) grid[x][(int)((dx/dy)*x+c+1)]=1;
-                    }
+                    roomsToRemove.remove((Integer)(i-1));
                 }
-                /*if(roomsToRemove.contains(i-1)){
-                if(roomsToRemove.contains(i)){
-                roomsToRemove.remove((Integer)(i));
-                }
-                roomsToRemove.remove((Integer)(i-1));
-                }*/
-            //}
+            }else{
+                roomsToRemove.add(i);
+            }
+        }
+        for(int i=roomsToRemove.size();i>0;i--){
+            //rooms.remove(rooms.get(i-1));
+        }
+
+        /*List<Integer> roomsToRemove=new ArrayList<>();
+        for(int i=1;i<rooms.size();i++){
+        Tunnel nextTunnel=new Tunnel(rooms.get(i-1),rooms.get(i),false);
+        double dx=nextTunnel.getStartX()-nextTunnel.getEndX();
+        double dy=nextTunnel.getStartY()-nextTunnel.getEndY();
+        //System.out.println(nextTunnel.getStartX+" "+" "+i+" "+nextTunnel.getStartX());
+        double c=nextTunnel.getStartY()-(dy/dx)*nextTunnel.getStartX();
+        if(Math.abs(dy/dx)<1){
+        if(nextTunnel.getStartX()<nextTunnel.getEndX()){
+        for(int x=nextTunnel.getStartX();x<nextTunnel.getEndX();x++){
+        grid[x][(int)((dy/dx)*x+c)]=1;
+        if ((int)((dy/dx)*x+c+1) < 1024) grid[x][(int)((dy/dx)*x+c+1)]=1;
+        }
+        }else{
+        for(int x=nextTunnel.getStartX();x>nextTunnel.getEndX();x--){
+        grid[x][(int)((dy/dx)*x+c)]=1;
+        if ((int)((dy/dx)*x+c+1) < 1024) grid[x][(int)((dy/dx)*x+c+1)]=1;
+        }
+        }
+        }else{ // Steep gradient (treat var x as y)
+        if(nextTunnel.getStartX()<nextTunnel.getEndX()){
+        for(int x=nextTunnel.getStartX();x<nextTunnel.getEndX();x++){
+        grid[(int)((dx/dy)*x+c)][x]=1;
+        if ((int)((dx/dy)*x+c+1) < 1024) grid[(int)((dx/dy)*x+c+1)][x]=1;
+        }
+        }else{
+        for(int x=nextTunnel.getStartX();x>nextTunnel.getEndX();x--){
+        grid[x][(int)((dx/dy)*x+c)]=1;
+        if ((int)((dx/dy)*x+c+1) < 1024) grid[x][(int)((dx/dy)*x+c+1)]=1;
+        }
+        }
+        /*if(roomsToRemove.contains(i-1)){
+        if(roomsToRemove.contains(i)){
+        roomsToRemove.remove((Integer)(i));
+        }
+        roomsToRemove.remove((Integer)(i-1));
+        }*/
+        //}
         //}
         /*for(int i=roomsToRemove.size();i>0;i--){
         //rooms.remove(rooms.get(i-1));
