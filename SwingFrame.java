@@ -11,13 +11,12 @@ import javax.imageio.ImageIO;
 public class SwingFrame extends JFrame 
 {
 
-    public static boolean server = true;
-    public static String opponent = null;
+    public static String server = null;
 
     public SwingFrame() 
     {
 
-        if (SwingFrame.server) {
+        if (SwingFrame.server == null) {
             this.setSize(1920, 1080);
         }
         else {
@@ -41,7 +40,7 @@ public class SwingFrame extends JFrame
         GameBoard board = new GameBoard();
         this.add(board);
 
-        if (SwingFrame.server) {        
+        if (SwingFrame.server == null) {        
             try
             {
                 Server server = new Server(8080);
@@ -61,8 +60,7 @@ public class SwingFrame extends JFrame
     {
 
         if (args.length > 0) {
-            opponent = args[0];
-            server = false;
+            server = args[0];
         }
 
         SwingUtilities.invokeLater(new Runnable() 

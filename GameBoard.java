@@ -26,6 +26,7 @@ import java.util.Random;
 public class GameBoard extends JPanel implements ActionListener {
 
     private Timer timer;
+    private long lastRequest;
 
     private BufferedImage[] sprite;
     private int[][] square;
@@ -37,8 +38,12 @@ public class GameBoard extends JPanel implements ActionListener {
     private boolean showcoords;
     private int[] lastMoved = null;
 
+    private boolean connectionEstablished = false;
+
     public GameBoard() 
     {
+        lastRequest = System.currentTimeMillis();
+
         sprite = new BufferedImage[10];
 
         try
@@ -78,16 +83,20 @@ public class GameBoard extends JPanel implements ActionListener {
 
         maze = new Maze(1024,1024);
 
-        Random rnd = new Random();        
+        if (SwingFrame.server == null) {
 
-        for (int izywizy = 0; izywizy < 10000; izywizy++) {
-            int x = 0; 
-            int y = 0;
-            while (x == 0 || maze.getGrid()[x][y] != 1 || square[x][y] > 0) {
-                x = rnd.nextInt(1024); 
-                y = rnd.nextInt(1024);            
+            Random rnd = new Random();        
+
+            for (int izywizy = 0; izywizy < 10000; izywizy++) {
+                int x = 0; 
+                int y = 0;
+                while (x == 0 || maze.getGrid()[x][y] != 1 || square[x][y] > 0) {
+                    x = rnd.nextInt(1024); 
+                    y = rnd.nextInt(1024);            
+                }
+                square[x][y] = rnd.nextInt(8) + 1; 
+
             }
-            square[x][y] = rnd.nextInt(8) + 1; 
 
         }
 
@@ -96,13 +105,25 @@ public class GameBoard extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        mouseX = MouseInfo.getPointerInfo().getLocation().getX() - this.getLocationOnScreen().getX();
-        mouseY = MouseInfo.getPointerInfo().getLocation().getY() - this.getLocationOnScreen().getY();        
 
-        if (mouseX >= 0 && mouseX < 1280 && mouseY >= 0 && mouseY < 1024) {
-            cursorX = (int) (mouseX) / 64;
-            cursorY = (int) (mouseY) / 64;
-        }        
+        if (!connectionEstablished) {
+
+            if (System.currentTimeMillis() - lastRequest > 1000) {
+                requestMap();            
+                lastRequest = System.currentTimeMillis();
+            } 
+
+        }
+        else 
+        {
+            mouseX = MouseInfo.getPointerInfo().getLocation().getX() - this.getLocationOnScreen().getX();
+            mouseY = MouseInfo.getPointerInfo().getLocation().getY() - this.getLocationOnScreen().getY();        
+
+            if (mouseX >= 0 && mouseX < 1280 && mouseY >= 0 && mouseY < 1024) {
+                cursorX = (int) (mouseX) / 64;
+                cursorY = (int) (mouseY) / 64;
+            }  
+        }
 
         repaint();
     }
@@ -110,83 +131,98 @@ public class GameBoard extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics graphics) { 
 
-        //MoveChecker m = new MoveChecker();
-
         super.paintComponent(graphics);
-
         Graphics2D g = (Graphics2D) graphics;
+        if (SwingFrame.server != null) {
 
-        if (!SwingFrame.server) {
+            if (!connectionEstablished) {
 
-            int xNudge = (int) ((cameraX - (int) cameraX) * 64);
-            int yNudge = (int) ((cameraY - (int) cameraY) * 64);
+                g.setPaint(new Color(255,255,255));
+                g.drawString("Waiting for server...", 100, 100);
 
-            for (int x = -1; x < 21; x++)
-            {
-                for (int y = 0; y < 17; y++)
-                {
-
-                    if (x + (int) cameraX >= 0 
-                    && y + (int) cameraY >= 0 
-                    && x + (int) cameraX < 1024 
-                    && y + (int) cameraY < 1024) {
-
-                        if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
-                        {
-                            g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
-                            //                         if (x == cursorX && y == cursorY)
-                            //                             g.setPaint(new Color(180,180,64));                
-                            //                         else
-                            //                             g.setPaint(new Color(180,180,180));                
-                        }
-                        else
-                        {
-                            g.drawImage (sprite[9], x * 64 - xNudge, y * 64 - yNudge, this);
-
-                            //g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
-                            //                         if (x == cursorX && y == cursorY)
-                            //g.setPaint(new Color(64,64,64));  
-                            //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
-                            //                         else
-                            //                             g.setPaint(new Color(160,160,160));                
-                        }
-
-                        //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
-
-                        if (showcoords)
-                        {
-                            g.setPaint(new Color(192,192,192));
-                            //                     g.drawString(columns[x] + rows[y], 322 + x * 64, 142 + y * 64);
-                        }
-
-                        int here = 0;
-
-                        here = square[x + (int) cameraX][y + (int) cameraY];
-
-                        if (here > 0) g.drawImage (sprite[here], x * 64 - xNudge, y * 64 - yNudge, this);
-
-                        if (x == selectedX && y == selectedY)
-                        {
-                            g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
-                        }
-
-                    }
-                }
+                g.drawImage (sprite[1], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 0  ) % 1000))), 200, this);
+                g.drawImage (sprite[2], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 100) % 1000))), 250, this);
+                g.drawImage (sprite[3], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 200) % 1000))), 300, this);
+                g.drawImage (sprite[4], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 300) % 1000))), 350, this);
+                g.drawImage (sprite[5], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 400) % 1000))), 400, this);
+                g.drawImage (sprite[6], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 500) % 1000))), 450, this);
+                g.drawImage (sprite[7], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 600) % 1000))), 500, this);
+                g.drawImage (sprite[8], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 700) % 1000))), 550, this);
 
             }
-            g.setPaint(new Color(255,255,255));
-            g.drawString(Double.toString(cameraX) + ", " + Double.toString(cameraY), 100, 100);
+            else
+            {
 
-            cameraX += 0.25;
+                int xNudge = (int) ((cameraX - (int) cameraX) * 64);
+                int yNudge = (int) ((cameraY - (int) cameraY) * 64);
 
-            if (cameraX > 1045) {
-                cameraX = -20;
-                cameraY += 16;
-                if (cameraY > 1024) {
-                    cameraY = 0;
+                for (int x = -1; x < 21; x++)
+                {
+                    for (int y = 0; y < 17; y++)
+                    {
+
+                        if (x + (int) cameraX >= 0 
+                        && y + (int) cameraY >= 0 
+                        && x + (int) cameraX < 1024 
+                        && y + (int) cameraY < 1024) {
+
+                            if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
+                            {
+                                g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                                //                         if (x == cursorX && y == cursorY)
+                                //                             g.setPaint(new Color(180,180,64));                
+                                //                         else
+                                //                             g.setPaint(new Color(180,180,180));                
+                            }
+                            else
+                            {
+                                g.drawImage (sprite[9], x * 64 - xNudge, y * 64 - yNudge, this);
+
+                                //g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                                //                         if (x == cursorX && y == cursorY)
+                                //g.setPaint(new Color(64,64,64));  
+                                //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
+                                //                         else
+                                //                             g.setPaint(new Color(160,160,160));                
+                            }
+
+                            //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
+
+                            if (showcoords)
+                            {
+                                g.setPaint(new Color(192,192,192));
+                                //                     g.drawString(columns[x] + rows[y], 322 + x * 64, 142 + y * 64);
+                            }
+
+                            int here = 0;
+
+                            here = square[x + (int) cameraX][y + (int) cameraY];
+
+                            if (here > 0) g.drawImage (sprite[here], x * 64 - xNudge, y * 64 - yNudge, this);
+
+                            if (x == selectedX && y == selectedY)
+                            {
+                                g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                            }
+
+                        }
+                    }
+
                 }
-            }            
+                g.setPaint(new Color(255,255,255));
+                g.drawString(Double.toString(cameraX) + ", " + Double.toString(cameraY), 100, 100);
 
+                cameraX += 0.25;
+
+                if (cameraX > 1045) {
+                    cameraX = -20;
+                    cameraY += 16;
+                    if (cameraY > 1024) {
+                        cameraY = 0;
+                    }
+                }            
+
+            }
         }
         else
 
@@ -219,108 +255,27 @@ public class GameBoard extends JPanel implements ActionListener {
         }
     }
 
-    public void forceSync()
+    public void requestMap()
     {
-        URL url;
-        HttpURLConnection con;
-        int responseCode;
 
-        if (SwingFrame.opponent == null) return;
+        if (SwingFrame.server == null) return;
+
+        try
         {
-            for (int x = 0; x < 8; x++)
-            {
-                for (int y = 0; y < 8; y++)
-                {
-                    String position = "";
+            URL url = new URL( "http://" + SwingFrame.server + "/map");                        
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            int responseCode = con.getResponseCode();
+            System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
 
-                    try
-                    {
-                        //                         url = new URL( "http://" + SwingFrame.opponent + "/set?position=" + position + "&value=" + square[y][x] + "&unmoved=" + unmoved[y][x]);                        
-                        //                         con = (HttpURLConnection) url.openConnection();
-                        //                         con.setRequestMethod("GET");
-                        //                         responseCode = con.getResponseCode();
-                        //                         System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
-                    }
-                    catch (Exception ex)
-                    {
-                        //                         System.out.println("HTTP GET ERROR: " + ex.getMessage());
-                    }
-
-                }
-
-            }
         }
-
-    }
-
-    public void processClick()
-    {
-        if (selectedX >= 0)
+        catch (Exception ex)
         {
-            if (selectedX != cursorX || selectedY != cursorY)
-            {
-
-                //                 if (moves[cursorY][cursorX] >= 0)
-                //                 {
-                //                     square[cursorY][cursorX] = square[selectedY][selectedX];
-                //                     square[selectedY][selectedX] = 0;     
-                //                     unmoved[selectedY][selectedX] = false;
-                //                     if (moves[cursorY][cursorX] == 6)
-                //                     {
-                //                         if (square[cursorY][cursorX] == 1) square[cursorY + 1][cursorX] = 0;
-                //                         if (square[cursorY][cursorX] == 7) square[cursorY - 1][cursorX] = 0;
-                //                     }
-                //                     lastMoved = new int[]{selectedX, selectedY, cursorX, cursorY};
-                // 
-                //                     if (SwingFrame.opponent != null)
-                //                     {                        
-                //                         String start = columns[selectedX] + rows[selectedY];
-                //                         String end = columns[cursorX] + rows[cursorY];
-                // 
-                //                         try
-                //                         {
-                //                             URL url = new URL( "http://" + SwingFrame.opponent + "/move?start=" + start + "&end=" + end );                        
-                //                             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                //                             con.setRequestMethod("GET");
-                //                             int responseCode = con.getResponseCode();
-                //                             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
-                // 
-                //                             if (moves[cursorY][cursorX] == 6)
-                //                             {
-                //                                 String position = null;
-                //                                 if (square[cursorY][cursorX] == 1) position = columns[cursorX] + rows[cursorY + 1];
-                //                                 if (square[cursorY][cursorX] == 7) position = columns[cursorX] + rows[cursorY - 1];                                
-                // 
-                //                                 new URL( "http://" + SwingFrame.opponent + "/move?position=" + position + "&value=0&unmoved=false" );
-                //                                 con = (HttpURLConnection) url.openConnection();
-                //                                 con.setRequestMethod("GET");
-                //                                 responseCode = con.getResponseCode();
-                //                                 System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
-                //                             }
-                // 
-                //                         }
-                //                         catch (Exception ex)
-                //                         {
-                //                             System.out.println("HTTP GET ERROR: " + ex.getMessage());
-                //                         }
-                //                     }
-                //                 }
-            }
-            selectedX = -1;
+            System.out.println("HTTP GET ERROR: " + ex.getMessage());
         }
-        else
-        {
-            if (square[cursorY][cursorX] > 0)
-            {
-                selectedX = cursorX;
-                selectedY = cursorY;                
-            }
-        }
-
     }
 
     class KeyboardyMcKeyboardFace extends KeyAdapter {
-
         @Override
         public void keyPressed(KeyEvent e) {
 
@@ -365,7 +320,6 @@ public class GameBoard extends JPanel implements ActionListener {
     {
         @Override
         public void mousePressed(MouseEvent e) {
-            processClick();
         }
 
         @Override
@@ -379,6 +333,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
         @Override
         public void mouseExited(MouseEvent e) {}        
-    }
-}
 
+    }
+
+}
