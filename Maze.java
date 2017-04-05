@@ -12,15 +12,14 @@ public class Maze{
         generate(0);
     }
 
-    public Maze(int x,int y,String input){
+    public Maze(int x, int y, String input){
         height=y;
         width=x;
         grid=new int[x][y];        
         int p=0;
 
-        System.out.println(input); //
-        
         char[] map = input.toCharArray();
+        System.out.println("Using char array of size " + map.length);        
 
         for(int i=0;i<x;i++){
             for(int j=0;j<y;j++){
