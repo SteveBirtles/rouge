@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.io.InputStream;
 
 import java.util.Random;
 
@@ -225,35 +226,35 @@ public class GameBoard extends JPanel implements ActionListener {
         }
         else
 
-        {}
-
-        BufferedImage canvas = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
-
-        Color color;
-
-        for (int x = 0; x < 512; x++)
         {
-            for (int y = 0; y < 512; y++)                
+
+            BufferedImage canvas = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
+
+            Color color;
+
+            for (int x = 0; x < 512; x++)
             {
-
-                if (x + (int) cameraX >= 512 || y + (int) cameraY >= 512) continue;                 
-
-                if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
+                for (int y = 0; y < 512; y++)                
                 {
-                    color = new Color(64,64,64);
-                } else {
-                    color = new Color(255,255,255);
+
+                    if (x + (int) cameraX >= 512 || y + (int) cameraY >= 512) continue;                 
+
+                    if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
+                    {
+                        color = new Color(64,64,64);
+                    } else {
+                        color = new Color(255,255,255);
+
+                    }
+
+                    canvas.setRGB(x, y, color.getRGB());                       
 
                 }
-
-                canvas.setRGB(x, y, color.getRGB());                       
-
             }
+
+            g.drawImage(canvas, null, null);
+
         }
-
-        g.drawImage(canvas, null, null);
-
-        // }
     }
 
     public void requestMap()
@@ -270,9 +271,10 @@ public class GameBoard extends JPanel implements ActionListener {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
-            
-            theGrid = con.getResponseMessage();
-            System.out.println("THE GRID: " + theGrid.length());
+            theGrid = con.getInputStream().toString();        
+
+            //theGrid = con.getResponseMessage();
+            System.out.println("THE GRID: " + theGrid.length()); 
             connectionEstablished = true;
         }
         catch (Exception ex)
