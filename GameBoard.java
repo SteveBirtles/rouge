@@ -172,8 +172,8 @@ public class GameBoard extends JPanel implements ActionListener {
         cameraX += 0.25;
 
         if (cameraX > 1100) {
-            cameraX = -1100;
-            cameraY = 1024;
+            cameraX -= 1100;
+            cameraY = 1000;
             if (cameraY > 1100) {
                 cameraY = 0;
             }
