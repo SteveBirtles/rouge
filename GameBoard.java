@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.MouseInfo;
 
-import java.io.File;
+import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
