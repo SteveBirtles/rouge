@@ -35,8 +35,7 @@ public class HTTPRequestHandler extends AbstractHandler {
         System.out.println("Request recieved from " + request.getRemoteAddr());
 
         StringBuilder responseText = new StringBuilder();
-
-        responseText.append(request.getRemoteAddr().split(".")[2]);
+        responseText.append(request.getRemoteAddr());
 
         responseText.append("~");
 
