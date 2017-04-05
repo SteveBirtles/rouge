@@ -18,21 +18,20 @@ public class Maze{
         grid=new int[x][y];        
         int p = 0;
 
-        int[] map = new int[x];        
+        int[] map = new int[x*y];        
         String[] rle = input.split(",");
 
         for (int i = 0; i < rle.length - 1; i += 2) {
+            int value = Integer.parseInt(rle[i]);
             for (int j = 0; j < Integer.parseInt(rle[i + 1]); j++) {
-                map[p] = Integer.parseInt(rle[i]);
-                p++;
+                map[p++] = value;
             }
         }
 
         int q = 0;        
         outer: for(int i=0;i<x;i++){
             for(int j=0;j<y;j++){                
-                grid[i][j] = map[q];      
-                q++;
+                grid[i][j] = map[q++];      
                 if (q > p) break outer;
             }
         }
