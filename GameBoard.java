@@ -39,6 +39,7 @@ public class GameBoard extends JPanel implements ActionListener {
     private boolean showcoords;
     private int[] lastMoved = null;
     private boolean connectionEstablished = false;
+    private boolean drawMap = false;
 
     public GameBoard() 
     {
@@ -224,7 +225,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
             }
         }
-        else
+        else if (SwingFrame.server == null || drawMap)
 
         {
 
@@ -299,6 +300,16 @@ public class GameBoard extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
 
             int keycode = e.getKeyCode();
+
+            if (keycode == 'm' || keycode == 'M') 
+            {
+                drawMap = true;
+            }
+
+            if (keycode == 'n' || keycode == 'N') 
+            {
+                drawMap = false;        
+            }
 
             if (keycode == 'w' || keycode == 'W') 
             {
