@@ -16,7 +16,7 @@ public class Maze{
         height=y;
         width=x;
         grid=new int[x][y];        
-        int p=0;
+        int p = 0;
 
         int[] map = new int[x];        
         String[] rle = input.split(",");
@@ -28,11 +28,12 @@ public class Maze{
             }
         }
 
-        p = 0;        
-        for(int i=0;i<x;i++){
-            for(int j=0;j<y;j++){
-                grid[i][j] = map[p];      
-                p++;
+        int q = 0;        
+        outer: for(int i=0;i<x;i++){
+            for(int j=0;j<y;j++){                
+                grid[i][j] = map[q];      
+                q++;
+                if (p > q) break outer;
             }
         }
     }
