@@ -21,8 +21,13 @@ public class Maze{
         int[] map = new int[x*y];
 
         String[] splitInput = input.split("~");
-        String[] wizd = splitInput[1].split(",");
-        String[] rle = splitInput[0].split(",");
+        int myNumber = Integer.parseInt(splitInput[0]);
+
+        System.out.println("I am player number " + myNumber);
+
+        String[] rle = splitInput[1].split(",");
+        String[] wizd = splitInput[2].split(",");
+
         int wizBit = 0;
         int wizX = 0;
         int wizY = 0;

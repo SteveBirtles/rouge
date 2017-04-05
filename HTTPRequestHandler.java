@@ -36,6 +36,10 @@ public class HTTPRequestHandler extends AbstractHandler {
 
         StringBuilder responseText = new StringBuilder();
 
+        responseText.append(request.getRemoteAddr().split(".")[3]);
+
+        responseText.append("~");
+
         int lastValue = -1;
         int repeats = 0;
         int value = 0;
@@ -68,7 +72,7 @@ public class HTTPRequestHandler extends AbstractHandler {
                 if(board.square[x][y] != 0){
                     String wiz = Integer.toString(x) + "," + Integer.toString(y) + ","
                         + Integer.toString(board.square[x][y]) + ",";
-                    System.out.println(wiz);
+                    //System.out.println(wiz);
                     responseText.append(wiz);                     
                 }
             }
