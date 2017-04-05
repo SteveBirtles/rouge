@@ -273,8 +273,9 @@ public class GameBoard extends JPanel implements ActionListener {
             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
             InputStream inputStream = con.getInputStream(); 
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream)); 
+            String line="";
             while(br.ready()){ 
-                String line = br.readLine(); 
+                line = br.readLine(); 
                 //line has the contents returned by the inputStream 
             }
 
