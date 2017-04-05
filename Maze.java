@@ -20,7 +20,7 @@ public class Maze{
 
         int[] map = new int[x*y];
 
-        String[] splitInput = input.split("*");
+        String[] splitInput = input.split("~");
         String[] wizd = splitInput[1].split(",");
         String[] rle = splitInput[0].split(",");
         int wizBit = 0;
