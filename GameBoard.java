@@ -289,7 +289,7 @@ public class GameBoard extends JPanel implements ActionListener {
             theGrid = line;        
 
             //theGrid = con.getResponseMessage();
-            String[] gridyMcGridFace = theGrid.split("*");
+            String[] gridyMcGridFace = theGrid.split("~");
             System.out.println("THE GRID: " + gridyMcGridFace[0].length() + ", " + gridyMcGridFace[1].length()); 
             connectionEstablished = true;
         }
