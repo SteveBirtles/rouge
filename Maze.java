@@ -20,7 +20,7 @@ public class Maze{
 
         int[] map = new int[x*y];
 
-        String[] splitInput = input.split("|");
+        String[] splitInput = input.split("*");
         String[] wizd = splitInput[1].split(",");
         String[] rle = splitInput[0].split(",");
         int wizBit = 0;
@@ -30,16 +30,16 @@ public class Maze{
         for(String s : wizd){
             switch(wizBit){
                 case 0:
-                    wizX = Integer.parseInt(s);
-                    break;
+                wizX = Integer.parseInt(s);
+                break;
                 case 1:
-                    wizY = Integer.parseInt(s);
-                    break;
+                wizY = Integer.parseInt(s);
+                break;
                 case 2:
-                    wizType = Integer.parseInt(s);
-                    square[wizX][wizY] = wizType;
-                    wizBit = -1;
-                    break;
+                wizType = Integer.parseInt(s);
+                square[wizX][wizY] = wizType;
+                wizBit = -1;
+                break;
             }
             wizBit++;
         }

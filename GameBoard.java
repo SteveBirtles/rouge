@@ -85,7 +85,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
         if (SwingFrame.server == null) {
             maze = new Maze(512,512);   
-            
+
             Random rnd = new Random();        
 
             for (int izywizy = 0; izywizy < 10000; izywizy++) {
@@ -98,7 +98,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 square[x][y] = rnd.nextInt(8) + 1; 
 
             }
-            
+
         }
 
     }
@@ -289,7 +289,8 @@ public class GameBoard extends JPanel implements ActionListener {
             theGrid = line;        
 
             //theGrid = con.getResponseMessage();
-            System.out.println("THE GRID (" + theGrid.length() + ") " + theGrid); 
+            String[] gridyMcGridFace = theGrid.split("*");
+            System.out.println("THE GRID: " + gridyMcGridFace[0].length() + ", " + gridyMcGridFace[1].length()); 
             connectionEstablished = true;
         }
         catch (Exception ex)

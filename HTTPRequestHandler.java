@@ -61,7 +61,7 @@ public class HTTPRequestHandler extends AbstractHandler {
             //System.out.print(Integer.toString(value) + ","+Integer.toString(repeats));
         }
 
-        responseText.append("|");
+        responseText.append("*");
 
         for (int x = 0; x < 512; x++) {
             for (int y = 0; y < 512; y++) {          
