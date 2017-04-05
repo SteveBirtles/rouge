@@ -225,33 +225,33 @@ public class GameBoard extends JPanel implements ActionListener {
         }
         else
 
+        {}
+
+        BufferedImage canvas = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
+
+        Color color;
+
+        for (int x = 0; x < 1024; x++)
         {
-
-            BufferedImage canvas = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
-
-            Color color;
-
-            for (int x = 0; x < 1024; x++)
+            for (int y = 0; y < 1024; y++)                
             {
-                for (int y = 0; y < 1024; y++)                
+
+                if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
                 {
-
-                    if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
-                    {
-                        color = new Color(64,64,64);
-                    } else {
-                        color = new Color(255,255,255);
-
-                    }
-
-                    canvas.setRGB(x, y, color.getRGB());                       
+                    color = new Color(64,64,64);
+                } else {
+                    color = new Color(255,255,255);
 
                 }
+
+                canvas.setRGB(x, y, color.getRGB());                       
+
             }
-
-            g.drawImage(canvas, null, null);
-
         }
+
+        g.drawImage(canvas, null, null);
+
+        // }
     }
 
     public void requestMap()
