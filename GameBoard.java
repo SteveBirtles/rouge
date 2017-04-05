@@ -268,6 +268,8 @@ public class GameBoard extends JPanel implements ActionListener {
             int responseCode = con.getResponseCode();
             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
 
+            connectionEstablished = true;
+
         }
         catch (Exception ex)
         {
