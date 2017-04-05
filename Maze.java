@@ -5,6 +5,13 @@ public class Maze{
     private int width;
     private int[][] grid;
 
+    public Maze(int x,int y){
+        height=y;
+        width=x;
+        grid=new int[x][y];
+        generate(0);       
+    }
+
     public Maze(int x,int y,String input){
         height=y;
         width=x;
