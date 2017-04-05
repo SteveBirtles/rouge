@@ -271,7 +271,14 @@ public class GameBoard extends JPanel implements ActionListener {
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
-            theGrid = con.getInputStream().toString();        
+            InputStream inputStream = con.getInputStream(); 
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream)); 
+            while(br.ready()){ 
+                String line = br.readLine(); 
+                //line has the contents returned by the inputStream 
+            }
+
+            theGrid = line;        
 
             //theGrid = con.getResponseMessage();
             System.out.println("THE GRID (" + theGrid.length() + ") " + theGrid); 
