@@ -21,7 +21,7 @@ public class Maze{
         int[] map = new int[x*y];
 
         String[] splitInput = input.split("~");
-        int myNumber = Integer.parseInt(splitInput[0]);
+        int myNumber = Integer.parseInt(splitInput[0].substring(7,8));
 
         System.out.println("I am player number " + myNumber);
 
