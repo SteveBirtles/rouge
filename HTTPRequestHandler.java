@@ -40,8 +40,8 @@ public class HTTPRequestHandler extends AbstractHandler {
         int repeats = 0;
         int value = 0;
 
-        for (int x = 0; x < 1024; x++) {
-            for (int y = 0; y < 1024; y++) {                
+        for (int x = 0; x < 512; x++) {
+            for (int y = 0; y < 512; y++) {                
                 value = board.maze.getGrid()[x][y];
                 if (value == lastValue) {
                     repeats += 1;
