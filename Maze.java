@@ -86,24 +86,24 @@ public class Maze{
                 if(nextTunnel.getStartX()<nextTunnel.getEndX()){
                     for(int x=nextTunnel.getStartX();x<nextTunnel.getEndX();x++){
                         grid[x][(int)((dy/dx)*x+c)]=1;
-                        grid[x][(int)((dy/dx)*x+c+1)]=1;
+                        if ((int)((dy/dx)*x+c+1) < 1024) grid[x][(int)((dy/dx)*x+c+1)]=1;
                     }
                 }else{
                     for(int x=nextTunnel.getStartX();x>nextTunnel.getEndX();x--){
                         grid[x][(int)((dy/dx)*x+c)]=1;
-                        grid[x][(int)((dy/dx)*x+c+1)]=1;
+                        if ((int)((dy/dx)*x+c+1) < 1024) grid[x][(int)((dy/dx)*x+c+1)]=1;
                     }
                 }
             }else{ // Steep gradient (treat var x as y)
                 if(nextTunnel.getStartX()<nextTunnel.getEndX()){
                     for(int x=nextTunnel.getStartX();x<nextTunnel.getEndX();x++){
                         grid[(int)((dx/dy)*x+c)][x]=1;
-                        grid[(int)((dx/dy)*x+c+1)][x]=1;
+                        if ((int)((dx/dy)*x+c+1) < 1024) grid[(int)((dx/dy)*x+c+1)][x]=1;
                     }
                 }else{
                     for(int x=nextTunnel.getStartX();x>nextTunnel.getEndX();x--){
-                        grid[(int)((dx/dy)*x+c)][x]=1;
-                        grid[(int)((dx/dy)*x+c+1)][x]=1;
+                        grid[x][(int)((dx/dy)*x+c)]=1;
+                        if ((int)((dx/dy)*x+c+1) < 1024) grid[x][(int)((dx/dy)*x+c+1)]=1;
                     }
                 }
                 /*if(roomsToRemove.contains(i-1)){
