@@ -15,9 +15,10 @@ public class Maze{
     public Maze(int x,int y,String input){
         height=y;
         width=x;
-        grid=new int[x][y];
-        generate(0);
+        grid=new int[x][y];        
         int p=0;
+
+        System.out.println(input); //JANKY
 
         char[] map = input.toCharArray();
 
