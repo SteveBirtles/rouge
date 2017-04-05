@@ -56,8 +56,8 @@ public class HTTPRequestHandler extends AbstractHandler {
                     repeats = 1;
                 }
             }
-            responseText.append(Integer.toString(value) + ",");
-            responseText.append(Integer.toString(repeats) + ",");
+            //responseText.append(Integer.toString(value) + ",");
+            //responseText.append(Integer.toString(repeats) + ",");
             //System.out.print(Integer.toString(value) + ","+Integer.toString(repeats));
         }
 
