@@ -18,7 +18,7 @@ public class Maze{
         grid=new int[x][y];        
         int p=0;
 
-        int[] map = new int[1048576];        
+        int[] map = new int[x*y];        
         String[] rle = input.split(",");
 
         for (int i = 0; i < rle.length; i += 2) {

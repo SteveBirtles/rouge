@@ -78,11 +78,11 @@ public class GameBoard extends JPanel implements ActionListener {
 
     private void resetBoard()
     {
-        square = new int[1024][1024];        
+        square = new int[512][512];        
 
         if (SwingFrame.server == null) {
 
-            maze = new Maze(1024,1024);
+            maze = new Maze(512,512);
 
             Random rnd = new Random();        
 
@@ -90,8 +90,8 @@ public class GameBoard extends JPanel implements ActionListener {
                 int x = 0; 
                 int y = 0;
                 while (x == 0 || maze.getGrid()[x][y] != 1 || square[x][y] > 0) {
-                    x = rnd.nextInt(1024); 
-                    y = rnd.nextInt(1024);            
+                    x = rnd.nextInt(512); 
+                    y = rnd.nextInt(512);            
                 }
                 square[x][y] = rnd.nextInt(8) + 1; 
 
@@ -276,7 +276,7 @@ public class GameBoard extends JPanel implements ActionListener {
             System.out.println("HTTP GET ERROR: " + ex.getMessage());
         }
         
-        if (theGrid != null) maze = new Maze(1024,1024, theGrid);
+        if (theGrid != null) maze = new Maze(512,512, theGrid);
         
     }
 
