@@ -50,13 +50,15 @@ public class HTTPRequestHandler extends AbstractHandler {
                     if (repeats > 0) {
                         responseText.append(Integer.toString(value) + ",");
                         responseText.append(Integer.toString(repeats) + ",");
+                        //System.out.print(Integer.toString(value) + ","+Integer.toString(repeats)+",");
                     }
                     lastValue = value;
                     repeats = 1;
                 }
             }
             responseText.append(Integer.toString(value) + ",");
-            responseText.append(Integer.toString(repeats));
+            responseText.append(Integer.toString(repeats) + ",");
+            //System.out.print(Integer.toString(value) + ","+Integer.toString(repeats));
         }
 
         System.out.println("Generated response OK, length: " + responseText.length());
