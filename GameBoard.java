@@ -33,7 +33,8 @@ public class GameBoard extends JPanel implements ActionListener {
     private long lastRequest;
     private BufferedImage[] sprite;
     private int cursorX = 0, cursorY = 0;
-    private double cameraX = 0, cameraY = 0;   
+    private double cameraX = 0, cameraY = 0;
+    private int playerX = 0, playerY = 0;
     private int selectedX = -1, selectedY;
     private double mouseX, mouseY;
     private boolean showcoords;
@@ -303,6 +304,8 @@ public class GameBoard extends JPanel implements ActionListener {
                     if (square[x][y] == SwingFrame.player) {
                         cameraX = x - 10;
                         cameraY = y - 8;
+                        playerX = x;
+                        playerY = y;
                     }
                 }
 
@@ -329,23 +332,36 @@ public class GameBoard extends JPanel implements ActionListener {
 
             if (keycode == 'w' || keycode == 'W') 
             {
-                cameraY -= 1;
-                if (cameraY < -16) cameraY = -16;                
+                square[playerX][playerY] = 0;
+                square[playerX][++playerY] = SwingFrame.player;
+
+                //cameraY -= 1;
+                //if (cameraY < -16) cameraY = -16;    
+
             }
             if (keycode == 's' || keycode == 'S')
             {
-                cameraY += 1;
-                if (cameraY > 512) cameraY = 512;
+                square[playerX][playerY] = 0;
+                square[++playerX][playerY] = SwingFrame.player;
+                
+                //cameraY += 1;
+                //if (cameraY > 512) cameraY = 512;
             }            
             if (keycode == 'a' || keycode == 'A') 
             {
-                cameraX -= 1;
-                if (cameraX < -20) cameraX = -20;
+                square[playerX][playerY] = 0;
+                square[--playerX][++playerY] = SwingFrame.player;
+                
+                //cameraX -= 1;
+                //if (cameraX < -20) cameraX = -20;
             }
             if (keycode == 'd' || keycode == 'D') 
             {
-                cameraX += 1;
-                if (cameraX > 512) cameraX = 512;
+                square[playerX][playerY] = 0;
+                square[++playerX][playerY] = SwingFrame.player;
+                
+                //cameraX += 1;
+                //if (cameraX > 512) cameraX = 512;
             }            
 
             if (keycode == 'r' || keycode == 'R') 
