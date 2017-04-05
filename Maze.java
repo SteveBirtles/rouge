@@ -33,7 +33,7 @@ public class Maze{
             for(int j=0;j<y;j++){                
                 grid[i][j] = map[q];      
                 q++;
-                if (p > q) break outer;
+                if (q > p) break outer;
             }
         }
     }
