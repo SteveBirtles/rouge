@@ -215,52 +215,61 @@ public class GameBoard extends JPanel implements ActionListener {
                 g.setPaint(new Color(255,255,255));
                 g.drawString(Double.toString(cameraX) + ", " + Double.toString(cameraY), 100, 100);
 
-                cameraX += 0.25;
+                //                 cameraX += 0.25;
+                // 
+                //                 if (cameraX > 532) {
+                //                     cameraX = -20;
+                //                     cameraY += 16;
+                //                     if (cameraY > 532) {
+                //                         cameraY = 0;
+                //                     }
+                //                 }            
 
-                if (cameraX > 532) {
-                    cameraX = -20;
-                    cameraY += 16;
-                    if (cameraY > 532) {
-                        cameraY = 0;
-                    }
-                }            
-
-            }
-        }
-
-        if (SwingFrame.server == null || drawMap)
-
-        {
-
-            BufferedImage canvas = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
-
-            Color color;
-
-            for (int x = 0; x < 512; x++)
-            {
-                for (int y = 0; y < 512; y++)                
-                {
-
-                    if (x  >= 512 || y >= 512) continue;                 
-
-                    if (maze != null && maze.getGrid()[x ][y] == 1)
+                if (SwingFrame.player != 0) {
+                    for (int x = 0; x < 512; x++)
                     {
-                        color = new Color(64,64,64);
-                    } else if(maze != null && maze.getGrid()[x ][y] == 2){
-                        color = new Color(0,0,255);
-
-                    }else{
-                        color = new Color(255,255,255);
+                        for (int y = 0; y < 512; y++)                
+                        {
+                            if (square[x][y] == SwingFrame.player) {
+                                cameraX = x - 10;
+                                cameraY = y - 10;
+                            }
+                        }
 
                     }
+                }
 
-                    canvas.setRGB(x, y, color.getRGB());                       
+                if (SwingFrame.server == null || drawMap)
+                {
+                    BufferedImage canvas = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
+                    Color color;
+                    for (int x = 0; x < 512; x++)
+                    {
+                        for (int y = 0; y < 512; y++)                
+                        {
+
+                            if (x  >= 512 || y >= 512) continue;                 
+
+                            if (maze != null && maze.getGrid()[x ][y] == 1)
+                            {
+                                color = new Color(64,64,64);
+                            } else if(maze != null && maze.getGrid()[x ][y] == 2){
+                                color = new Color(0,0,255);
+
+                            }else{
+                                color = new Color(255,255,255);
+
+                            }
+
+                            canvas.setRGB(x, y, color.getRGB());                       
+
+                        }
+                    }
+
+                    g.drawImage(canvas, null, null);
 
                 }
             }
-
-            g.drawImage(canvas, null, null);
-
         }
     }
 

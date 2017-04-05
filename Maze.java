@@ -21,9 +21,9 @@ public class Maze{
         int[] map = new int[x*y];
 
         String[] splitInput = input.split("~");
-        int myNumber = Integer.parseInt(splitInput[0].substring(7,8));
+        SwingFrame.player = Integer.parseInt(splitInput[0].substring(7,8));
 
-        System.out.println("I am player number " + myNumber);
+        System.out.println("I am player number " + SwingFrame.player);
 
         String[] rle = splitInput[1].split(",");
         String[] wizd = splitInput[2].split(",");

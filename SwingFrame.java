@@ -12,7 +12,8 @@ public class SwingFrame extends JFrame
 {
 
     public static String server = null;
-
+    public static int player = 0;
+    
     public SwingFrame() 
     {
 
