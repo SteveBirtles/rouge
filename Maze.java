@@ -18,10 +18,10 @@ public class Maze{
         grid=new int[x][y];        
         int p=0;
 
-        int[] map = new int[x*y];        
+        int[] map = new int[x];        
         String[] rle = input.split(",");
 
-        for (int i = 0; i < rle.length; i += 2) {
+        for (int i = 0; i < rle.length - 1; i += 2) {
             for (int j = 0; j < Integer.parseInt(rle[i + 1]); j++) {
                 map[p] = Integer.parseInt(rle[i]);
                 p++;
