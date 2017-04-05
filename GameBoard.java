@@ -268,8 +268,7 @@ public class GameBoard extends JPanel implements ActionListener {
             System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
 
             String theGrid = con.getResponseMessage();
-
-            System.out.println(theGrid);
+            maze = new Maze(1024,1024, theGrid);
 
             connectionEstablished = true;
 
