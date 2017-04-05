@@ -225,7 +225,8 @@ public class GameBoard extends JPanel implements ActionListener {
 
             }
         }
-        else if (SwingFrame.server == null || drawMap)
+
+        if (SwingFrame.server == null || drawMap)
 
         {
 
