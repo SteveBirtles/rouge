@@ -36,10 +36,27 @@ public class HTTPRequestHandler extends AbstractHandler {
 
         StringBuilder responseText = new StringBuilder();
 
+        int lastValue = -1;
+        int repeats = 0;
+        int value = 0;
+
         for (int x = 0; x < 1024; x++) {
             for (int y = 0; y < 1024; y++) {                
-                responseText.append(Integer.toString(board.maze.getGrid()[x][y]));
+                value = board.maze.getGrid()[x][y];
+                if (value == lastValue) {
+                    repeats += 1;
+                }
+                else {
+                    if (repeats > 0) {
+                        responseText.append(Integer.toString(value) + ",");
+                        responseText.append(Integer.toString(repeats) + ",");
+                    }
+                    lastValue = value;
+                    repeats = 1;
+                }
             }
+            responseText.append(Integer.toString(value) + ",");
+            responseText.append(Integer.toString(repeats));
         }
 
         System.out.println("Generated response OK, length: " + responseText.length());

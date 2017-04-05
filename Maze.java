@@ -18,23 +18,20 @@ public class Maze{
         grid=new int[x][y];        
         int p=0;
 
-        char[] map = input.toCharArray();
-        System.out.println("Using char array of size " + map.length);        
+        int[] map = new int[1048576];        
+        String[] rle = input.split(",");
 
+        for (int i = 0; i < rle.length; i += 2) {
+            for (int j = 0; j < Integer.parseInt(rle[i + 1]); j++) {
+                map[p] = Integer.parseInt(rle[i]);
+                p++;
+            }
+        }
+
+        p = 0;        
         for(int i=0;i<x;i++){
             for(int j=0;j<y;j++){
-
-                switch (map[p]) {
-                    case '0':
-                    grid[i][j] = 0;
-                    break;
-                    case '1':
-                    grid[i][j] = 1;
-                    break;
-                    case '2':
-                    grid[i][j] = 2;
-                    break;
-                }                
+                grid[i][j] = map[p];      
                 p++;
             }
         }
