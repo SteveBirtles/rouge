@@ -334,34 +334,25 @@ public class GameBoard extends JPanel implements ActionListener {
             {
                 square[playerX][playerY] = 0;
                 square[playerX][--playerY] = SwingFrame.player;
-
-                //cameraY -= 1;
-                //if (cameraY < -16) cameraY = -16;    
-
+                cameraY += 1;                
             }
             if (keycode == 's' || keycode == 'S')
             {
                 square[playerX][playerY] = 0;
                 square[playerX][++playerY] = SwingFrame.player;
-                
-                //cameraY += 1;
-                //if (cameraY > 512) cameraY = 512;
+                cameraY -= 1;
             }            
             if (keycode == 'a' || keycode == 'A') 
             {
                 square[playerX][playerY] = 0;
-                square[--playerX][playerY] = SwingFrame.player;
-                
-                //cameraX -= 1;
-                //if (cameraX < -20) cameraX = -20;
+                square[--playerX][playerY] = SwingFrame.player;                
+                cameraX += 1;                
             }
             if (keycode == 'd' || keycode == 'D') 
             {
                 square[playerX][playerY] = 0;
-                square[++playerX][playerY] = SwingFrame.player;
-                
-                //cameraX += 1;
-                //if (cameraX > 512) cameraX = 512;
+                square[++playerX][playerY] = SwingFrame.player;                
+                cameraX -= 1;                
             }            
 
             if (keycode == 'r' || keycode == 'R') 
