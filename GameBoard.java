@@ -43,7 +43,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
         try
         {
-            sprite[0] =   ImageIO.read(new File("selected.png"));
+            sprite[0] =   ImageIO.read(new File("res/Background/fancywall.png"));
             sprite[1] =   ImageIO.read(new File("res/Wizards/black.png"));
             sprite[2] =   ImageIO.read(new File("res/Wizards/blue.png"));
             sprite[3] =   ImageIO.read(new File("res/Wizards/green.png"));
@@ -128,22 +128,25 @@ public class GameBoard extends JPanel implements ActionListener {
                 && x + (int) cameraX < 1024 
                 && y + (int) cameraY < 1024) {
 
-                    if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
+                    if (maze.getGrid()[x + (int) cameraX][y + (int) cameraY] != 1)
                     {
-                        if (x == cursorX && y == cursorY)
-                            g.setPaint(new Color(180,180,64));                
-                        else
-                            g.setPaint(new Color(180,180,180));                
+                        g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                        //                         if (x == cursorX && y == cursorY)
+                        //                             g.setPaint(new Color(180,180,64));                
+                        //                         else
+                        //                             g.setPaint(new Color(180,180,180));                
                     }
                     else
                     {
-                        if (x == cursorX && y == cursorY)
-                            g.setPaint(new Color(160,160,48));                
-                        else
-                            g.setPaint(new Color(160,160,160));                
+                        //g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                        //                         if (x == cursorX && y == cursorY)
+                        g.setPaint(new Color(64,64,64));  
+                        g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
+                        //                         else
+                        //                             g.setPaint(new Color(160,160,160));                
                     }
 
-                    g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
+                    //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
 
                     if (showcoords)
                     {
@@ -171,7 +174,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
         cameraX += 0.25;
 
-        if (cameraX > 1100) {
+        if (cameraX > 1045) {
             cameraX = -20;
             cameraY += 16;
             if (cameraY > 1024) {
