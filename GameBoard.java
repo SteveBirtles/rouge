@@ -84,9 +84,8 @@ public class GameBoard extends JPanel implements ActionListener {
         square = new int[512][512];        
 
         if (SwingFrame.server == null) {
-
-            maze = new Maze(512,512);
-
+            maze = new Maze(512,512);   
+            
             Random rnd = new Random();        
 
             for (int izywizy = 0; izywizy < 10000; izywizy++) {
@@ -99,7 +98,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 square[x][y] = rnd.nextInt(8) + 1; 
 
             }
-
+            
         }
 
     }
