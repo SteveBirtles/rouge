@@ -340,7 +340,7 @@ public class GameBoard extends JPanel implements ActionListener {
             }
             if (keycode == 's' || keycode == 'S')
             {
-                if (playerY < 512) {
+                if (playerY < 510) {
                     square[playerX][playerY] = 0;
                     square[playerX][++playerY] = SwingFrame.player;
                     cameraY += 1;
@@ -348,7 +348,7 @@ public class GameBoard extends JPanel implements ActionListener {
             }            
             if (keycode == 'a' || keycode == 'A') 
             {
-                if (playerY > 0) {
+                if (playerX > 0) {
                     square[playerX][playerY] = 0;
                     square[--playerX][playerY] = SwingFrame.player;                
                     cameraX -= 1;    
@@ -356,7 +356,7 @@ public class GameBoard extends JPanel implements ActionListener {
             }
             if (keycode == 'd' || keycode == 'D') 
             {
-                if (playerY < 512) {
+                if (playerX < 512) {
                     square[playerX][playerY] = 0;
                     square[++playerX][playerY] = SwingFrame.player;                
                     cameraX += 1;
