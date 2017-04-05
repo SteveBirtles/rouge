@@ -242,12 +242,15 @@ public class GameBoard extends JPanel implements ActionListener {
                 for (int y = 0; y < 512; y++)                
                 {
 
-                    if (x + (int) cameraX >= 512 || y + (int) cameraY >= 512) continue;                 
+                    if (x  >= 512 || y >= 512) continue;                 
 
-                    if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 1)
+                    if (maze != null && maze.getGrid()[x ][y] == 1)
                     {
                         color = new Color(64,64,64);
-                    } else {
+                    } else if(maze != null && maze.getGrid()[x ][y] == 2){
+                        color = new Color(0,0,255);
+
+                    }else{
                         color = new Color(255,255,255);
 
                     }
