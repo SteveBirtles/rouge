@@ -15,7 +15,7 @@ public class Maze{
     public Maze(int x, int y, String input, int[][] square){
         height=y;
         width=x;
-        grid=new int[x][y];        
+        grid=new int[x][y];
         int p = 0;
 
         int[] map = new int[x*y];
@@ -58,10 +58,10 @@ public class Maze{
             }
         }
 
-        int q = 0;        
+        int q = 0;
         outer: for(int i=0;i<x;i++){
-            for(int j=0;j<y;j++){                
-                grid[i][j] = map[q++];      
+            for(int j=0;j<y;j++){
+                grid[i][j] = map[q++];
                 if (q > p) break outer;
             }
         }
@@ -115,13 +115,16 @@ public class Maze{
         System.out.println("Making tunnels..");
 
         List<Integer> roomsToRemove=new ArrayList<>();
+        List<Room> doneRooms=new ArrayList<>();
         for(int i=1;i<rooms.size();i++){
-            Tunnel nextTunnel=new Tunnel(rooms.get(i-1),rooms.get(i),false);
+            doneRooms.add(rooms.get(i-1));
+            Room room = rooms.get(i);
+            Tunnel nextTunnel=new Tunnel(room,room.getNearestRoom(doneRooms),false);
             double dx=nextTunnel.getStartX()-nextTunnel.getEndX();
             double dy=nextTunnel.getStartY()-nextTunnel.getEndY();
             //System.out.println(nextTunnel.getStartX+" "+" "+i+" "+nextTunnel.getStartX());
-            double c=nextTunnel.getStartY()-(dy/dx)*nextTunnel.getStartX();
             if(Math.abs(dy/dx)<1){
+                double c=nextTunnel.getStartY()-(dy/dx)*nextTunnel.getStartX();
                 if(nextTunnel.getStartX()<nextTunnel.getEndX()){
                     for(int x=nextTunnel.getStartX();x<nextTunnel.getEndX();x++){
                         grid[x][(int)((dy/dx)*x+c)]=2;
@@ -140,7 +143,18 @@ public class Maze{
                     roomsToRemove.remove((Integer)(i-1));
                 }
             }else{
-                roomsToRemove.add(i);
+                double c=nextTunnel.getStartX()-(dx/dy)*nextTunnel.getStartY();
+                if(nextTunnel.getStartY()<nextTunnel.getEndY()){
+                    for(int y=nextTunnel.getStartY();y<nextTunnel.getEndY();y++){
+                        grid[(int)((dx/dy)*y+c)][y]=2;
+                        grid[(int)((dx/dy)*y+c+1)][y]=2;
+                    }
+                }else{
+                    for(int y=nextTunnel.getStartY();y>nextTunnel.getEndY();y--){
+                        grid[(int)((dx/dy)*y+c)][y]=2;
+                        grid[(int)((dx/dy)*y+c+1)][y]=2;
+                    }
+                }
             }
         }
         for(int i=roomsToRemove.size();i>0;i--){
