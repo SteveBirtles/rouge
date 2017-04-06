@@ -115,8 +115,10 @@ public class Maze{
         System.out.println("Making tunnels..");
 
         List<Integer> roomsToRemove=new ArrayList<>();
+        List<Room> doneRooms=new ArrayList<>();
         for(int i=1;i<rooms.size();i++){
-            Tunnel nextTunnel=new Tunnel(rooms.get(i-1),rooms.get(i),false);
+            Room room = rooms.get(i);
+            Tunnel nextTunnel=new Tunnel(room,room.getNearestRoom(rooms),false);
             double dx=nextTunnel.getStartX()-nextTunnel.getEndX();
             double dy=nextTunnel.getStartY()-nextTunnel.getEndY();
             //System.out.println(nextTunnel.getStartX+" "+" "+i+" "+nextTunnel.getStartX());
@@ -143,13 +145,13 @@ public class Maze{
                 double c=nextTunnel.getStartX()-(dx/dy)*nextTunnel.getStartY();
                 if(nextTunnel.getStartY()<nextTunnel.getEndY()){
                     for(int y=nextTunnel.getStartY();y<nextTunnel.getEndY();y++){
-                        grid[(int)((dx/dy)*y+c)][y]=1;
-                        grid[(int)((dx/dy)*y+c+1)][y]=1;
+                        grid[(int)((dx/dy)*y+c)][y]=2;
+                        grid[(int)((dx/dy)*y+c+1)][y]=2;
                     }
                 }else{
                     for(int y=nextTunnel.getStartY();y>nextTunnel.getEndY();y--){
-                        grid[(int)((dx/dy)*y+c)][y]=1;
-                        grid[(int)((dx/dy)*y+c+1)][y]=1;
+                        grid[(int)((dx/dy)*y+c)][y]=2;
+                        grid[(int)((dx/dy)*y+c+1)][y]=2;
                     }
                 }
             }
