@@ -15,7 +15,7 @@ public class Maze{
     public Maze(int x, int y, String input, int[][] square){
         height=y;
         width=x;
-        grid=new int[x][y];        
+        grid=new int[x][y];
         int p = 0;
 
         int[] map = new int[x*y];
@@ -58,10 +58,10 @@ public class Maze{
             }
         }
 
-        int q = 0;        
+        int q = 0;
         outer: for(int i=0;i<x;i++){
-            for(int j=0;j<y;j++){                
-                grid[i][j] = map[q++];      
+            for(int j=0;j<y;j++){
+                grid[i][j] = map[q++];
                 if (q > p) break outer;
             }
         }
@@ -140,7 +140,18 @@ public class Maze{
                     roomsToRemove.remove((Integer)(i-1));
                 }
             }else{
-                roomsToRemove.add(i);
+              double c=nextTunnel.getStartX()-(dx/dy)*nextTunnel.getStartY();
+              if(nextTunnel.getStartY()<nextTunnel.getEndY()){
+                for(int y=nextTunnel.getStartY();y<nextTunnel.getEndY();y++){
+                  grid[(int)((dx/dy)*y+c)][y]=1;
+                  grid[(int)((dx/dy)*y+c+1)][y]=1;
+                }
+              }else{
+                for(int y=nextTunnel.getStartY();y>nextTunnel.getEndY();y--){
+                  grid[(int)((dx/dy)*y+c)][y]=1;
+                  grid[(int)((dx/dy)*y+c+1)][y]=1;
+                }
+              }
             }
         }
         for(int i=roomsToRemove.size();i>0;i--){
