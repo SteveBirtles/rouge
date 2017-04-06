@@ -81,7 +81,7 @@ public class Maze{
                 grid[i][j]=0;
             }
         }
-        int numberOfRooms=rand(100,400);
+        final int numberOfRooms=128;
         //numberOfRooms=num;
         List<Room> rooms=new ArrayList<>();
         System.out.println("Making rooms...");
