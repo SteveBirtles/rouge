@@ -9,4 +9,6 @@ comment3.params=graphics
 comment3.target=void\ paintComponent(java.awt.Graphics)
 comment4.params=
 comment4.target=void\ requestMap()
-numComments=5
+comment5.params=
+comment5.target=void\ requestMove()
+numComments=6
