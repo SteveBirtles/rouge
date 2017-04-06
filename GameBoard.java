@@ -313,6 +313,37 @@ public class GameBoard extends JPanel implements ActionListener {
         }
 
     }
+    
+    public void requestMove()
+    {
+
+        if (SwingFrame.server == null) return;
+
+        String response = null;
+
+        try
+        {
+            URL url = new URL( "http://" + SwingFrame.server + "/move");                        
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            int responseCode = con.getResponseCode();
+            System.out.println("HTTP POST URL: " + url + ", Response Code: " + responseCode);
+            InputStream inputStream = con.getInputStream(); 
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream)); 
+            String line="";
+            while(br.ready()){ 
+                line = br.readLine(); 
+            }
+
+            response = line;        
+
+        }
+        catch (Exception ex)
+        {
+            System.out.println("HTTP POST ERROR: " + ex.getMessage());
+        }
+        
+    }
 
     class KeyboardyMcKeyboardFace extends KeyAdapter {
         @Override
