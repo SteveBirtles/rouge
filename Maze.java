@@ -117,8 +117,9 @@ public class Maze{
         List<Integer> roomsToRemove=new ArrayList<>();
         List<Room> doneRooms=new ArrayList<>();
         for(int i=1;i<rooms.size();i++){
+            doneRooms.add(rooms.get(i-1));
             Room room = rooms.get(i);
-            Tunnel nextTunnel=new Tunnel(room,room.getNearestRoom(rooms),false);
+            Tunnel nextTunnel=new Tunnel(room,room.getNearestRoom(doneRooms),false);
             double dx=nextTunnel.getStartX()-nextTunnel.getEndX();
             double dy=nextTunnel.getStartY()-nextTunnel.getEndY();
             //System.out.println(nextTunnel.getStartX+" "+" "+i+" "+nextTunnel.getStartX());
