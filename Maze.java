@@ -81,12 +81,12 @@ public class Maze{
                 grid[i][j]=0;
             }
         }
-        final int numberOfRooms=128;
+        final int numberOfRooms=256;
         //numberOfRooms=num;
         List<Room> rooms=new ArrayList<>();
         System.out.println("Making rooms...");
         for(int i=0;i<numberOfRooms;i++){
-            rooms.add(new Room(rand(10,50),rand(10,50),false));
+            rooms.add(new Room(rand(5,20),rand(5,20),false));
         }
         List<Room> placedRooms=new ArrayList<>();
         System.out.println("Placing rooms...");
