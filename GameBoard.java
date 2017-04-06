@@ -313,8 +313,8 @@ public class GameBoard extends JPanel implements ActionListener {
         }
 
     }
-    
-    public void requestMove()
+
+    public void requestMove(int x, int y)
     {
 
         if (SwingFrame.server == null) return;
@@ -325,9 +325,9 @@ public class GameBoard extends JPanel implements ActionListener {
         {
             URL url = new URL( "http://" + SwingFrame.server + "/move");                        
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
+            con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
-            System.out.println("HTTP POST URL: " + url + ", Response Code: " + responseCode);
+            System.out.println("HTTP GET URL: " + url + ", Response Code: " + responseCode);
             InputStream inputStream = con.getInputStream(); 
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream)); 
             String line="";
@@ -340,9 +340,9 @@ public class GameBoard extends JPanel implements ActionListener {
         }
         catch (Exception ex)
         {
-            System.out.println("HTTP POST ERROR: " + ex.getMessage());
+            System.out.println("HTTP GET ERROR: " + ex.getMessage());
         }
-        
+
     }
 
     class KeyboardyMcKeyboardFace extends KeyAdapter {
@@ -366,6 +366,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 if (playerY > 0 && maze.getGrid()[playerX][playerY - 1] != 0) {                    
                     square[playerX][playerY] = 0;
                     square[playerX][--playerY] = SwingFrame.player;
+                    requestMove(playerX, playerY);
                     cameraY -= 1;                
                 }
             }
@@ -374,6 +375,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 if (playerY < 510 && maze.getGrid()[playerX][playerY + 1] != 0) {
                     square[playerX][playerY] = 0;
                     square[playerX][++playerY] = SwingFrame.player;
+                    requestMove(playerX, playerY);
                     cameraY += 1;
                 }
             }            
@@ -381,7 +383,8 @@ public class GameBoard extends JPanel implements ActionListener {
             {
                 if (playerX > 0 && maze.getGrid()[playerX - 1][playerY] != 0) {
                     square[playerX][playerY] = 0;
-                    square[--playerX][playerY] = SwingFrame.player;                
+                    square[--playerX][playerY] = SwingFrame.player;
+                    requestMove(playerX, playerY);
                     cameraX -= 1;    
                 }
             }
@@ -389,7 +392,8 @@ public class GameBoard extends JPanel implements ActionListener {
             {
                 if (playerX < 512 && maze.getGrid()[playerX + 1][playerY] != 0) {
                     square[playerX][playerY] = 0;
-                    square[++playerX][playerY] = SwingFrame.player;                
+                    square[++playerX][playerY] = SwingFrame.player;   
+                    requestMove(playerX, playerY);
                     cameraX += 1;
                 }
             }            
