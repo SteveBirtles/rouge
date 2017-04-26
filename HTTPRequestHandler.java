@@ -114,8 +114,10 @@ public class HTTPRequestHandler extends AbstractHandler {
                 }                        
 
                 synchronized(board) {
-                    if (lastx > -1) board.square[lastx][lasty] = 0;
-                    board.square[playerx][playery] = player;               
+                    if (board.square[playerx][playery] == 0) {
+                        if (lastx > -1) board.square[lastx][lasty] = 0;
+                        board.square[playerx][playery] = player;      
+                    }
                 }
 
                 for (int x = 0; x < 512; x++) {
