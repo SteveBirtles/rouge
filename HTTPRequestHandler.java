@@ -77,9 +77,9 @@ public class HTTPRequestHandler extends AbstractHandler {
             if (request.getQueryString() != null)
             {
 
-                String playerx = null;
-                String playery = null;
-                String player = null;
+                int playerx = 0;
+                int playery = 0;
+                int player = 0;
 
                 for(String q : request.getQueryString().split("&"))
                 {
@@ -87,11 +87,10 @@ public class HTTPRequestHandler extends AbstractHandler {
                     {
                         String variable = q.split("=")[0];
                         String value = q.split("=")[1];
-                        System.out.println(" -> " + variable + " = " + value); 
 
-                        if (variable.equals("x")) playerx = value;
-                        if (variable.equals("y")) playery = value;                    
-                        if (variable.equals("player")) player = value;                        
+                        if (variable.equals("x")) playerx = Integer.parseInt(value);
+                        if (variable.equals("y")) playery = Integer.parseInt(value);                    
+                        if (variable.equals("player")) player = Integer.parseInt(value);                        
                     }
                     else               
                     {
@@ -104,12 +103,12 @@ public class HTTPRequestHandler extends AbstractHandler {
 
                 for (int x = 0; x < 512; x++) {
                     for (int y = 0; y < 512; y++) {          
-                        if(board.square[x][y] == Integer.parseInt(player)){
+                        if(board.square[x][y] == player){
                             board.square[x][y] = 0;
                         }
                     }
                 }                        
-                board.square[Integer.parseInt(playerx)][Integer.parseInt(playery)] = Integer.parseInt(player);
+                board.square[playerx][playery] = player;
 
                 for (int x = 0; x < 512; x++) {
                     for (int y = 0; y < 512; y++) {          

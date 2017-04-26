@@ -343,10 +343,17 @@ public class GameBoard extends JPanel implements ActionListener {
                 line = br.readLine(); 
             }
 
-            square = new int[512][512];
+            for (int i = 0; i < 512; i++)
+            {
+                for (int j = 0; j < 512; j++)                
+                {
+                    square[i][j] = 0;
+                }
+            }
+
+            System.out.println("Recieved :" + line);
 
             String[] wizd = line.split(",");
-
             int wizBit = 0;
             int wizX = 0;
             int wizY = 0;
