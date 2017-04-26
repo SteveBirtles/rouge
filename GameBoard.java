@@ -423,7 +423,8 @@ public class GameBoard extends JPanel implements ActionListener {
 
                 if (keycode == 'w' || keycode == 'W') 
                 {
-                    if (playerY > 0 && maze.getGrid()[playerX][playerY - 1] != 0) {                    
+                    if (playerY > 0 && maze.getGrid()[playerX][playerY - 1] != 0
+                    && square[playerX][playerY - 1] == 0) {                    
                         square[playerX][playerY] = 0;
                         square[playerX][--playerY] = SwingFrame.player;                    
                         cameraY -= 1;  
@@ -432,7 +433,8 @@ public class GameBoard extends JPanel implements ActionListener {
                 }
                 if (keycode == 's' || keycode == 'S')
                 {
-                    if (playerY < 510 && maze.getGrid()[playerX][playerY + 1] != 0) {
+                    if (playerY < 510 && maze.getGrid()[playerX][playerY + 1] != 0
+                    && square[playerX][playerY + 1] == 0) {
                         square[playerX][playerY] = 0;
                         square[playerX][++playerY] = SwingFrame.player;
                         cameraY += 1;
@@ -441,7 +443,8 @@ public class GameBoard extends JPanel implements ActionListener {
                 }            
                 if (keycode == 'a' || keycode == 'A') 
                 {
-                    if (playerX > 0 && maze.getGrid()[playerX - 1][playerY] != 0) {
+                    if (playerX > 0 && maze.getGrid()[playerX - 1][playerY] != 0
+                    && square[playerX - 1][playerY] == 0) {
                         square[playerX][playerY] = 0;
                         square[--playerX][playerY] = SwingFrame.player;
                         cameraX -= 1;   
@@ -450,7 +453,8 @@ public class GameBoard extends JPanel implements ActionListener {
                 }
                 if (keycode == 'd' || keycode == 'D') 
                 {
-                    if (playerX < 512 && maze.getGrid()[playerX + 1][playerY] != 0) {
+                    if (playerX < 512 && maze.getGrid()[playerX + 1][playerY] != 0
+                    && square[playerX + 1][playerY] == 0) {
                         square[playerX][playerY] = 0;
                         square[++playerX][playerY] = SwingFrame.player;   
                         cameraX += 1;
@@ -464,7 +468,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 resetBoard();
             }            
 
-            if (keycode == 'q' || keycode == 'Q') 
+            if (keycode == KeyEvent.VK_ESCAPE) 
             {
                 System.exit(0);
                 return;
