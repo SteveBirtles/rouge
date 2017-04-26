@@ -216,12 +216,12 @@ public class GameBoard extends JPanel implements ActionListener {
                 }
 
                 g.setPaint(new Color(255,255,255));                
-                long millis = 1000 - System.currentTimeMillis() % 1000;
+                long millis = 3000 - System.currentTimeMillis() % 3000;
 
                 g.drawString("Turn Time Remaining: " + millis, 100, 100);
 
                 if (lastMillis < millis) {
-                    g.drawRect (0, 0, 1024, 1024);
+                    g.fillRect (0, 0, 1024, 1024);
                 }
 
                 lastMillis = millis;
