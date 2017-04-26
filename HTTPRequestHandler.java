@@ -77,6 +77,8 @@ public class HTTPRequestHandler extends AbstractHandler {
             if (request.getQueryString() != null)
             {
 
+                int lastx = -1;
+                int lasty = 0;
                 int playerx = 0;
                 int playery = 0;
                 int player = 0;
@@ -104,11 +106,17 @@ public class HTTPRequestHandler extends AbstractHandler {
                 for (int x = 0; x < 512; x++) {
                     for (int y = 0; y < 512; y++) {          
                         if(board.square[x][y] == player){
-                            board.square[x][y] = 0;
+                            lastx = x;
+                            lasty = y;
+                            break;
                         }
                     }
                 }                        
-                board.square[playerx][playery] = player;
+
+                synchronized(board) {
+                    if (lastx > -1) board.square[lastx][lasty] = 0;
+                    board.square[playerx][playery] = player;               
+                }
 
                 for (int x = 0; x < 512; x++) {
                     for (int y = 0; y < 512; y++) {          
