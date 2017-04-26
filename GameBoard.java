@@ -228,7 +228,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
                 if (SwingFrame.server == null || drawMap)
                 {
-                    BufferedImage canvas = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_ARGB);
+                    BufferedImage canvas = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
                     Color color;
                     for (int x = 0; x < 512; x++)
                     {
