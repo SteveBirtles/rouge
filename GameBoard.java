@@ -43,7 +43,7 @@ public class GameBoard extends JPanel implements ActionListener {
     private boolean drawMap = false;
     private long lastMillis;
     private boolean turnEnd;
-    private int movesAllowed = 0;
+    private long moveWait;
 
     public GameBoard() 
     {
@@ -229,9 +229,11 @@ public class GameBoard extends JPanel implements ActionListener {
                     //g.setPaint(new Color(255,255,255));                
                     //g.fillRect (0, 0, 1024, 1024);
                     turnEnd = true;
-                    movesAllowed = 2;
+                    moveWait = 0 ;
                 } else
                 {
+                    moveWait -= millis - lastMillis;
+                    if (moveWait < 0) moveWait = 0;
                     turnEnd = false;
                 }
 
@@ -419,7 +421,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 drawMap = false;        
             }
 
-            if (movesAllowed > 0) {
+            if (moveWait == 0) {
 
                 if (keycode == 'w' || keycode == 'W') 
                 {
@@ -428,7 +430,7 @@ public class GameBoard extends JPanel implements ActionListener {
                         square[playerX][playerY] = 0;
                         square[playerX][--playerY] = SwingFrame.player;                    
                         cameraY -= 1;  
-                        movesAllowed--;
+                        moveWait = 125;
                     }
                 }
                 if (keycode == 's' || keycode == 'S')
@@ -438,7 +440,7 @@ public class GameBoard extends JPanel implements ActionListener {
                         square[playerX][playerY] = 0;
                         square[playerX][++playerY] = SwingFrame.player;
                         cameraY += 1;
-                        movesAllowed--;
+                        moveWait = 125;
                     }
                 }            
                 if (keycode == 'a' || keycode == 'A') 
@@ -447,8 +449,8 @@ public class GameBoard extends JPanel implements ActionListener {
                     && square[playerX - 1][playerY] == 0) {
                         square[playerX][playerY] = 0;
                         square[--playerX][playerY] = SwingFrame.player;
-                        cameraX -= 1;   
-                        movesAllowed--;
+                        cameraX -= 1;
+                        moveWait = 125;
                     }
                 }
                 if (keycode == 'd' || keycode == 'D') 
@@ -458,7 +460,7 @@ public class GameBoard extends JPanel implements ActionListener {
                         square[playerX][playerY] = 0;
                         square[++playerX][playerY] = SwingFrame.player;   
                         cameraX += 1;
-                        movesAllowed--;
+                        moveWait = 125;
                     }
                 }       
             }
