@@ -100,8 +100,8 @@ public class HTTPRequestHandler extends AbstractHandler {
                     }
                 }
 
-                System.out.println("Move request recieved from " + request.getRemoteAddr()  +
-                    ": " + playerx + ", " + playery + " player " + player + "." );            
+                //System.out.println("Move request recieved from " + request.getRemoteAddr()  +
+                //    ": " + playerx + ", " + playery + " player " + player + "." );            
 
                 for (int x = 0; x < 512; x++) {
                     for (int y = 0; y < 512; y++) {          
@@ -137,7 +137,7 @@ public class HTTPRequestHandler extends AbstractHandler {
 
         }
 
-        System.out.println("Generated response OK, length: " + responseText.length());
+        //System.out.println("Generated response OK, length: " + responseText.length());
         response.getWriter().println(responseText.toString());
         baseRequest.setHandled(true);
 

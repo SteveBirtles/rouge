@@ -43,6 +43,7 @@ public class GameBoard extends JPanel implements ActionListener {
     private boolean drawMap = false;
     private long lastMillis;
     private boolean turnEnd;
+    private int movesAllowed = 0;
 
     public GameBoard() 
     {
@@ -228,6 +229,7 @@ public class GameBoard extends JPanel implements ActionListener {
                     //g.setPaint(new Color(255,255,255));                
                     //g.fillRect (0, 0, 1024, 1024);
                     turnEnd = true;
+                    movesAllowed = 2;
                 } else
                 {
                     turnEnd = false;
@@ -400,38 +402,45 @@ public class GameBoard extends JPanel implements ActionListener {
                 drawMap = false;        
             }
 
-            if (keycode == 'w' || keycode == 'W') 
-            {
-                if (playerY > 0 && maze.getGrid()[playerX][playerY - 1] != 0) {                    
-                    square[playerX][playerY] = 0;
-                    square[playerX][--playerY] = SwingFrame.player;                    
-                    cameraY -= 1;                
+            if (movesAllowed > 0) {
+
+                if (keycode == 'w' || keycode == 'W') 
+                {
+                    if (playerY > 0 && maze.getGrid()[playerX][playerY - 1] != 0) {                    
+                        square[playerX][playerY] = 0;
+                        square[playerX][--playerY] = SwingFrame.player;                    
+                        cameraY -= 1;  
+                        movesAllowed--;
+                    }
                 }
+                if (keycode == 's' || keycode == 'S')
+                {
+                    if (playerY < 510 && maze.getGrid()[playerX][playerY + 1] != 0) {
+                        square[playerX][playerY] = 0;
+                        square[playerX][++playerY] = SwingFrame.player;
+                        cameraY += 1;
+                        movesAllowed--;
+                    }
+                }            
+                if (keycode == 'a' || keycode == 'A') 
+                {
+                    if (playerX > 0 && maze.getGrid()[playerX - 1][playerY] != 0) {
+                        square[playerX][playerY] = 0;
+                        square[--playerX][playerY] = SwingFrame.player;
+                        cameraX -= 1;   
+                        movesAllowed--;
+                    }
+                }
+                if (keycode == 'd' || keycode == 'D') 
+                {
+                    if (playerX < 512 && maze.getGrid()[playerX + 1][playerY] != 0) {
+                        square[playerX][playerY] = 0;
+                        square[++playerX][playerY] = SwingFrame.player;   
+                        cameraX += 1;
+                        movesAllowed--;
+                    }
+                }       
             }
-            if (keycode == 's' || keycode == 'S')
-            {
-                if (playerY < 510 && maze.getGrid()[playerX][playerY + 1] != 0) {
-                    square[playerX][playerY] = 0;
-                    square[playerX][++playerY] = SwingFrame.player;
-                    cameraY += 1;
-                }
-            }            
-            if (keycode == 'a' || keycode == 'A') 
-            {
-                if (playerX > 0 && maze.getGrid()[playerX - 1][playerY] != 0) {
-                    square[playerX][playerY] = 0;
-                    square[--playerX][playerY] = SwingFrame.player;
-                    cameraX -= 1;    
-                }
-            }
-            if (keycode == 'd' || keycode == 'D') 
-            {
-                if (playerX < 512 && maze.getGrid()[playerX + 1][playerY] != 0) {
-                    square[playerX][playerY] = 0;
-                    square[++playerX][playerY] = SwingFrame.player;   
-                    cameraX += 1;
-                }
-            }            
 
             if (keycode == 'r' || keycode == 'R') 
             {

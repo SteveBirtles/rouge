@@ -109,7 +109,7 @@ public class Maze{
                 }
             }
             placedRooms.add(room);
-            System.out.println("Made room "+placedRooms.size());
+            //System.out.println("Made room "+placedRooms.size());
 
         }
         System.out.println("Making tunnels..");
