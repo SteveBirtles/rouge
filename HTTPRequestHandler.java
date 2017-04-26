@@ -72,15 +72,13 @@ public class HTTPRequestHandler extends AbstractHandler {
 
             }
 
-        } else if (request.getRequestURI().startsWith("/move")) { 
-
-            System.out.println("Move request recieved from " + request.getRemoteAddr());            
+        } else if (request.getRequestURI().startsWith("/move")) {
 
             if (request.getQueryString() != null)
             {
 
-                String start = null;
-                String end = null;
+                String playerx = null;
+                String playery = null;
                 String player = null;
 
                 for(String q : request.getQueryString().split("&"))
@@ -91,9 +89,21 @@ public class HTTPRequestHandler extends AbstractHandler {
                         String value = q.split("=")[1];
                         System.out.println(" -> " + variable + " = " + value); 
 
-                        if (variable.equals("start")) start = value;
-                        if (variable.equals("end")) end = value;                    
+                        if (variable.equals("x")) playerx = value;
+                        if (variable.equals("y")) playery = value;                    
                         if (variable.equals("player")) player = value;
+
+                        System.out.println("Move request recieved from " + request.getRemoteAddr()  +
+                            ": " + playerx + ", " + playery + " player " + value + "." );            
+
+                        for (int x = 0; x < 512; x++) {
+                            for (int y = 0; y < 512; y++) {          
+                                if(board.square[x][y] == Integer.parseInt(player)){
+                                    board.square[x][y] = 0;
+                                }
+                            }
+                        }                        
+                        board.square[Integer.parseInt(playerx)][Integer.parseInt(playery)] = Integer.parseInt(player);
 
                     }
                     else               
@@ -102,7 +112,16 @@ public class HTTPRequestHandler extends AbstractHandler {
                     }
                 }
 
-                responseText.append("OK");
+                for (int x = 0; x < 512; x++) {
+                    for (int y = 0; y < 512; y++) {          
+                        if(board.square[x][y] != 0){
+                            String wiz = Integer.toString(x) + "," + Integer.toString(y) + ","
+                                + Integer.toString(board.square[x][y]) + ",";
+                            responseText.append(wiz);                     
+                        }
+                    }
+
+                }
 
             }
             else

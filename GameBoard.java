@@ -99,7 +99,6 @@ public class GameBoard extends JPanel implements ActionListener {
                     y = rnd.nextInt(512);            
                 }
                 square[x][y] = izywizy + 1; 
-
             }
 
         }
@@ -221,7 +220,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 }
 
                 g.setPaint(new Color(255,255,255));                
-                long millis = 3000 - System.currentTimeMillis() % 3000;
+                long millis = 1000 - System.currentTimeMillis() % 1000;
 
                 g.drawString("Turn Time Remaining: " + millis, 100, 100);
 
@@ -330,8 +329,6 @@ public class GameBoard extends JPanel implements ActionListener {
 
         if (SwingFrame.server == null) return;
 
-        String response = null;
-
         try
         {
             URL url = new URL( "http://" + SwingFrame.server + "/move");                        
@@ -346,7 +343,30 @@ public class GameBoard extends JPanel implements ActionListener {
                 line = br.readLine(); 
             }
 
-            response = line;        
+            square = new int[512][512];
+
+            String[] wizd = line.split(",");
+
+            int wizBit = 0;
+            int wizX = 0;
+            int wizY = 0;
+            int wizType = 0;
+            for(String s : wizd){
+                switch(wizBit){
+                    case 0:
+                    wizX = Integer.parseInt(s);
+                    break;
+                    case 1:
+                    wizY = Integer.parseInt(s);
+                    break;
+                    case 2:
+                    wizType = Integer.parseInt(s);
+                    square[wizX][wizY] = wizType;
+                    wizBit = -1;
+                    break;
+                }
+                wizBit++;
+            }
 
         }
         catch (Exception ex)
