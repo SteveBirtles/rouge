@@ -216,15 +216,9 @@ public class GameBoard extends JPanel implements ActionListener {
                 g.setPaint(new Color(255,255,255));
                 g.drawString(Double.toString(cameraX) + ", " + Double.toString(cameraY), 100, 100);
 
-                //                 cameraX += 0.25;
-                // 
-                //                 if (cameraX > 532) {
-                //                     cameraX = -20;
-                //                     cameraY += 16;
-                //                     if (cameraY > 532) {
-                //                         cameraY = 0;
-                //                     }
-                //                 }            
+                g.setPaint(new Color(255,255,255));
+                long millis = 1000 - System.currentTimeMillis() % 1000;
+                g.drawString("Turn Time Remaining: " + millis, 100, 100);
 
             }
         }
@@ -261,6 +255,7 @@ public class GameBoard extends JPanel implements ActionListener {
         }
 
     }
+
     public void requestMap()
     {
 
