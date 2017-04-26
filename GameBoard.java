@@ -232,13 +232,12 @@ public class GameBoard extends JPanel implements ActionListener {
                     moveWait = 0 ;
                 } else
                 {
-                    moveWait -= millis - lastMillis;
+                    moveWait += millis - lastMillis;
                     if (moveWait < 0) moveWait = 0;
                     turnEnd = false;
                 }
 
                 lastMillis = millis;
-
             }
         }
 
