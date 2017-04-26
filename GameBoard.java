@@ -41,6 +41,7 @@ public class GameBoard extends JPanel implements ActionListener {
     private int[] lastMoved = null;
     private boolean connectionEstablished = false;
     private boolean drawMap = false;
+    private long lastMillis;
 
     public GameBoard() 
     {
@@ -213,12 +214,17 @@ public class GameBoard extends JPanel implements ActionListener {
                     }
 
                 }
-                g.setPaint(new Color(255,255,255));
-                g.drawString(Double.toString(cameraX) + ", " + Double.toString(cameraY), 100, 100);
 
-                g.setPaint(new Color(255,255,255));
+                g.setPaint(new Color(255,255,255));                
                 long millis = 1000 - System.currentTimeMillis() % 1000;
+
                 g.drawString("Turn Time Remaining: " + millis, 100, 100);
+
+                if (lastMillis < millis) {
+                    g.drawRect (0, 0, 1024, 1024);
+                }
+
+                lastMillis = millis;
 
             }
         }
