@@ -95,8 +95,8 @@ public class GameBoard extends JPanel implements ActionListener {
                 int x = 0; 
                 int y = 0;
                 while (x == 0 || maze.getGrid()[x][y] != 1 || square[x][y] > 0) {
-                    x = rnd.nextInt(512); 
-                    y = rnd.nextInt(512);            
+                    x = rnd.nextInt(50); 
+                    y = rnd.nextInt(50);            
                 }
                 square[x][y] = izywizy + 1; 
             }
