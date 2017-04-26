@@ -378,6 +378,23 @@ public class GameBoard extends JPanel implements ActionListener {
                 wizBit++;
             }
 
+            if (square[playerX][playerY] != SwingFrame.player)
+            {            
+                for (int xx = 0; xx < 512; xx++)
+                {
+                    for (int yy = 0; yy < 512; yy++)                
+                    {
+                        if (square[xx][yy] == SwingFrame.player) {
+                            cameraX = xx - 10;
+                            cameraY = yy - 8;
+                            playerX = xx;
+                            playerY = yy;
+                        }
+                    }
+
+                }
+            }
+
         }
         catch (Exception ex)
         {
