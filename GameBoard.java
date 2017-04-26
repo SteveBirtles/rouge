@@ -331,7 +331,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
         try
         {
-            URL url = new URL( "http://" + SwingFrame.server + "/move");                        
+            URL url = new URL( "http://" + SwingFrame.server + "/move?x=" + x + "&y=" + y + "&player=" + SwingFrame.player);                        
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             int responseCode = con.getResponseCode();
