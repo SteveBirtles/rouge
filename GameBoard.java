@@ -226,40 +226,41 @@ public class GameBoard extends JPanel implements ActionListener {
                 //                     }
                 //                 }            
 
-                if (SwingFrame.server == null || drawMap)
+            }
+        }
+
+        if (SwingFrame.server == null || drawMap)
+        {
+            BufferedImage canvas = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
+            Color color;
+            for (int x = 0; x < 512; x++)
+            {
+                for (int y = 0; y < 512; y++)                
                 {
-                    BufferedImage canvas = new BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB);
-                    Color color;
-                    for (int x = 0; x < 512; x++)
+
+                    if (x  >= 512 || y >= 512) continue;                 
+
+                    if (maze != null && maze.getGrid()[x ][y] == 1)
                     {
-                        for (int y = 0; y < 512; y++)                
-                        {
+                        color = new Color(64,64,64);
+                    } else if(maze != null && maze.getGrid()[x ][y] == 2){
+                        color = new Color(0,0,255);
 
-                            if (x  >= 512 || y >= 512) continue;                 
+                    }else{
+                        color = new Color(255,255,255);
 
-                            if (maze != null && maze.getGrid()[x ][y] == 1)
-                            {
-                                color = new Color(64,64,64);
-                            } else if(maze != null && maze.getGrid()[x ][y] == 2){
-                                color = new Color(0,0,255);
-
-                            }else{
-                                color = new Color(255,255,255);
-
-                            }
-
-                            canvas.setRGB(x, y, color.getRGB());                       
-
-                        }
                     }
 
-                    g.drawImage(canvas, null, null);
+                    canvas.setRGB(x, y, color.getRGB());                       
 
                 }
             }
-        }
-    }
 
+            g.drawImage(canvas, null, null);
+
+        }
+
+    }
     public void requestMap()
     {
 
