@@ -15,6 +15,9 @@ import java.awt.MouseInfo;
 import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+
 
 import java.util.ArrayList;
 
@@ -446,6 +449,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 {
                     if (playerX > 0 && maze.getGrid()[playerX - 1][playerY] != 0
                     && square[playerX - 1][playerY] == 0) {
+                        flipTheBits(sprite);
                         square[playerX][playerY] = 0;
                         square[--playerX][playerY] = SwingFrame.player;
                         cameraX -= 1;
@@ -456,6 +460,7 @@ public class GameBoard extends JPanel implements ActionListener {
                 {
                     if (playerX < 512 && maze.getGrid()[playerX + 1][playerY] != 0
                     && square[playerX + 1][playerY] == 0) {
+                        flipTheBits(sprite);
                         square[playerX][playerY] = 0;
                         square[++playerX][playerY] = SwingFrame.player;   
                         cameraX += 1;
@@ -475,6 +480,16 @@ public class GameBoard extends JPanel implements ActionListener {
                 return;
             }            
 
+        }
+    }
+
+    public void flipTheBits(BufferedImage[] images){
+        for(int i=0; i<9; i++){
+            BufferedImage b = sprite[i];
+            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+            tx.translate(-b.getWidth(null), 0);
+            AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            sprite[i] = op.filter(b, null);
         }
     }
 
