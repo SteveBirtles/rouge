@@ -113,7 +113,7 @@ public class HTTPRequestHandler extends AbstractHandler {
                     if (board.square[playerx][playery] == 0) {
                         if (lastx > -1) {
                             board.square[lastx][lasty] = 0;
-                            board.playerFlipped[player] = lastx > playerx;
+                            board.playerFlipped[player - 1] = lastx > playerx;
                         }
                         board.square[playerx][playery] = player;                           
                     }
@@ -124,7 +124,7 @@ public class HTTPRequestHandler extends AbstractHandler {
                         if(board.square[x][y] != 0){
                             String wiz = Integer.toString(x) + "," + Integer.toString(y) + ","
                                 + Integer.toString(board.square[x][y]) + ",";
-                            if (board.playerFlipped[board.square[x][y]] ) {
+                            if (board.playerFlipped[board.square[x][y] - 1] ) {
                                 wiz += "1,";
                             } else {
                                 wiz +="0,";
