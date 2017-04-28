@@ -14,7 +14,6 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 public class HTTPRequestHandler extends AbstractHandler {
 
     private GameBoard board;
-    
 
     public HTTPRequestHandler(GameBoard board)
     {
@@ -36,8 +35,7 @@ public class HTTPRequestHandler extends AbstractHandler {
         if (request.getRequestURI().startsWith("/map")) {
 
             System.out.println("Map request recieved from " + request.getRemoteAddr());
-            
-            
+
             responseText.append(request.getRemoteAddr());
             responseText.append("~");
             int lastValue = -1;
@@ -101,10 +99,6 @@ public class HTTPRequestHandler extends AbstractHandler {
                         System.out.println(" -> Invalid query string component (" + q + ")");
                     }
                 }
-
-                //System.out.println("Move request recieved from " + request.getRemoteAddr()  +
-                //    ": " + playerx + ", " + playery + " player " + player + "." );            
-
                 for (int x = 0; x < 512; x++) {
                     for (int y = 0; y < 512; y++) {          
                         if(board.square[x][y] == player){
@@ -117,8 +111,11 @@ public class HTTPRequestHandler extends AbstractHandler {
 
                 synchronized(board) {
                     if (board.square[playerx][playery] == 0) {
-                        if (lastx > -1) board.square[lastx][lasty] = 0;
-                        board.square[playerx][playery] = player;      
+                        if (lastx > -1) {
+                            board.square[lastx][lasty] = 0;
+                            board.playerFlipped[player] = lastx > playerx;
+                        }
+                        board.square[playerx][playery] = player;                           
                     }
                 }
 
@@ -127,6 +124,11 @@ public class HTTPRequestHandler extends AbstractHandler {
                         if(board.square[x][y] != 0){
                             String wiz = Integer.toString(x) + "," + Integer.toString(y) + ","
                                 + Integer.toString(board.square[x][y]) + ",";
+                            if (board.playerFlipped[board.square[x][y]] ) {
+                                wiz += "1,";
+                            } else {
+                                wiz +="0,";
+                            }
                             responseText.append(wiz);                     
                         }
                     }

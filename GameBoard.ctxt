@@ -11,6 +11,4 @@ comment4.params=
 comment4.target=void\ requestMap()
 comment5.params=x\ y
 comment5.target=void\ requestMove(int,\ int)
-comment6.params=images
-comment6.target=void\ flipTheBits(java.awt.image.BufferedImage[])
-numComments=7
+numComments=6

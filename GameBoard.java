@@ -28,11 +28,12 @@ import java.util.Random;
 public class GameBoard extends JPanel implements ActionListener {
 
     public int[][] square;
+    public boolean[] playerFlipped;
     public Maze maze = null;
 
     private Timer timer;
     private long lastRequest;
-    private BufferedImage[] sprite;
+    private BufferedImage[][] sprite;
     private int cursorX = 0, cursorY = 0;
     private double cameraX = 0, cameraY = 0;
     private int playerX = 0, playerY = 0;
@@ -51,25 +52,35 @@ public class GameBoard extends JPanel implements ActionListener {
     {
         lastRequest = System.currentTimeMillis();
 
-        sprite = new BufferedImage[11];
+        sprite = new BufferedImage[11][2];
 
         try
         {
-            sprite[0] =   ImageIO.read(new File("res/Background/dirt.png"));
-            sprite[1] =   ImageIO.read(new File("res/Wizards/black.png"));
-            sprite[2] =   ImageIO.read(new File("res/Wizards/blue.png"));
-            sprite[3] =   ImageIO.read(new File("res/Wizards/green.png"));
-            sprite[4] =   ImageIO.read(new File("res/Wizards/grey.png"));
-            sprite[5] =   ImageIO.read(new File("res/Wizards/orange.png"));
-            sprite[6] =   ImageIO.read(new File("res/Wizards/purple.png"));
-            sprite[7] =   ImageIO.read(new File("res/Wizards/red.png"));
-            sprite[8] =   ImageIO.read(new File("res/Wizards/white.png"));
-            sprite[9] =   ImageIO.read(new File("res/Background/tile.png"));
-            sprite[10] =   ImageIO.read(new File("res/Background/tunnelFloor.png"));
+            sprite[0][0]  =   ImageIO.read(new File("res/Background/dirt.png"));
+            sprite[1][0]  =   ImageIO.read(new File("res/Wizards/black.png"));
+            sprite[2][0]  =   ImageIO.read(new File("res/Wizards/blue.png"));
+            sprite[3][0]  =   ImageIO.read(new File("res/Wizards/green.png"));
+            sprite[4][0]  =   ImageIO.read(new File("res/Wizards/grey.png"));
+            sprite[5][0]  =   ImageIO.read(new File("res/Wizards/orange.png"));
+            sprite[6][0]  =   ImageIO.read(new File("res/Wizards/purple.png"));
+            sprite[7][0]  =   ImageIO.read(new File("res/Wizards/red.png"));
+            sprite[8][0]  =   ImageIO.read(new File("res/Wizards/white.png"));
+            sprite[9][0]  =   ImageIO.read(new File("res/Background/tile.png"));
+            sprite[10][0] =   ImageIO.read(new File("res/Background/tunnelFloor.png"));
         }
         catch (Exception ex)
         {
             System.out.println(ex.getMessage());
+        }
+
+        for (int s = 0; s < 11; s++) {
+
+            BufferedImage b = sprite[SwingFrame.player][0];
+            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+            tx.translate(-b.getWidth(null), 0);
+            AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            sprite[SwingFrame.player][1] = op.filter(b, null);
+
         }
 
         addKeyListener(new KeyboardyMcKeyboardFace());  
@@ -87,7 +98,8 @@ public class GameBoard extends JPanel implements ActionListener {
 
     private void resetBoard()
     {
-        square = new int[512][512];        
+        square = new int[512][512];      
+        playerFlipped = new boolean[8];
 
         if (SwingFrame.server == null) {
             maze = new Maze(512,512);   
@@ -150,14 +162,14 @@ public class GameBoard extends JPanel implements ActionListener {
                 g.setPaint(new Color(255,255,255));
                 g.drawString("Waiting for server...", 100, 100);
 
-                g.drawImage (sprite[1], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 0  ) % 1000))), 200, this);
-                g.drawImage (sprite[2], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 100) % 1000))), 250, this);
-                g.drawImage (sprite[3], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 200) % 1000))), 300, this);
-                g.drawImage (sprite[4], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 300) % 1000))), 350, this);
-                g.drawImage (sprite[5], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 400) % 1000))), 400, this);
-                g.drawImage (sprite[6], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 500) % 1000))), 450, this);
-                g.drawImage (sprite[7], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 600) % 1000))), 500, this);
-                g.drawImage (sprite[8], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 700) % 1000))), 550, this);
+                g.drawImage (sprite[1][0], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 0  ) % 1000))), 200, this);
+                g.drawImage (sprite[2][0], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 100) % 1000))), 250, this);
+                g.drawImage (sprite[3][0], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 200) % 1000))), 300, this);
+                g.drawImage (sprite[4][0], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 300) % 1000))), 350, this);
+                g.drawImage (sprite[5][0], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 400) % 1000))), 400, this);
+                g.drawImage (sprite[6][0], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 500) % 1000))), 450, this);
+                g.drawImage (sprite[7][0], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 600) % 1000))), 500, this);
+                g.drawImage (sprite[8][0], (int)( -100 + (1.480 * ((System.currentTimeMillis() - lastRequest + 700) % 1000))), 550, this);
 
             }
             else
@@ -178,7 +190,7 @@ public class GameBoard extends JPanel implements ActionListener {
 
                             if (maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] == 0)
                             {
-                                g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                                g.drawImage (sprite[0][0], x * 64 - xNudge, y * 64 - yNudge, this);
                                 //                         if (x == cursorX && y == cursorY)
                                 //                             g.setPaint(new Color(180,180,64));                
                                 //                         else
@@ -186,7 +198,7 @@ public class GameBoard extends JPanel implements ActionListener {
                             }
                             else if(maze != null && maze.getGrid()[x + (int) cameraX][y + (int) cameraY] ==1)
                             {
-                                g.drawImage (sprite[9], x * 64 - xNudge, y * 64 - yNudge, this);
+                                g.drawImage (sprite[9][0], x * 64 - xNudge, y * 64 - yNudge, this);
 
                                 //g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
                                 //                         if (x == cursorX && y == cursorY)
@@ -195,7 +207,7 @@ public class GameBoard extends JPanel implements ActionListener {
                                 //                         else
                                 //                             g.setPaint(new Color(160,160,160));                
                             }else{
-                                g.drawImage(sprite[10], x* 64 -xNudge,y*64 -yNudge, this);
+                                g.drawImage(sprite[10][0], x* 64 -xNudge,y*64 -yNudge, this);
                             }
 
                             //g.fillRect (x * 64 - xNudge, y * 64 - yNudge, 64, 64);              
@@ -207,14 +219,16 @@ public class GameBoard extends JPanel implements ActionListener {
                             }
 
                             int here = 0;
-
                             here = square[x + (int) cameraX][y + (int) cameraY];
 
-                            if (here > 0) g.drawImage (sprite[here], x * 64 - xNudge, y * 64 - yNudge, this);
+                            if (here > 0) {
+                                int direction = playerFlipped[here] ? 1 : 0;
+                                g.drawImage (sprite[here][direction], x * 64 - xNudge, y * 64 - yNudge, this);
+                            }
 
                             if (x == selectedX && y == selectedY)
                             {
-                                g.drawImage (sprite[0], x * 64 - xNudge, y * 64 - yNudge, this);
+                                g.drawImage (sprite[0][0], x * 64 - xNudge, y * 64 - yNudge, this);
                             }
 
                         }
@@ -375,6 +389,8 @@ public class GameBoard extends JPanel implements ActionListener {
                     case 2:
                     wizType = Integer.parseInt(s);
                     square[wizX][wizY] = wizType;
+                    case 3:
+                    playerFlipped[wizType] = Integer.parseInt(s) == 1;
                     wizBit = -1;
                     break;
                 }
@@ -448,11 +464,6 @@ public class GameBoard extends JPanel implements ActionListener {
                 {
                     if (playerX > 0 && maze.getGrid()[playerX - 1][playerY] != 0
                     && square[playerX - 1][playerY] == 0) {
-                        if(!directionLeft){
-                            flipTheBits(sprite);
-                            directionLeft = true;
-                        }
-
                         square[playerX][playerY] = 0;
                         square[--playerX][playerY] = SwingFrame.player;
                         cameraX -= 1;
@@ -463,10 +474,6 @@ public class GameBoard extends JPanel implements ActionListener {
                 {
                     if (playerX < 512 && maze.getGrid()[playerX + 1][playerY] != 0
                     && square[playerX + 1][playerY] == 0) {
-                        if(directionLeft){
-                            flipTheBits(sprite);
-                            directionLeft = false;
-                        }
                         square[playerX][playerY] = 0;
                         square[++playerX][playerY] = SwingFrame.player;   
                         cameraX += 1;
@@ -487,27 +494,6 @@ public class GameBoard extends JPanel implements ActionListener {
             }            
 
         }
-    }
-
-    public void flipTheBits(BufferedImage[] images){
-        /**
-        for(int i=0; i<9; i++){
-
-            BufferedImage b = sprite[i];
-            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-            tx.translate(-b.getWidth(null), 0);
-            AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-            sprite[i] = op.filter(b, null);
-        }
-        **/
-        
-        
-            BufferedImage b = sprite[SwingFrame.player];
-            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-            tx.translate(-b.getWidth(null), 0);
-            AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-            sprite[SwingFrame.player] = op.filter(b, null);
-        
     }
 
     class MouseyMcMouseFace implements MouseListener
