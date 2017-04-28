@@ -502,11 +502,11 @@ public class GameBoard extends JPanel implements ActionListener {
         **/
         
         
-            BufferedImage b = sprite[HTTPRequestHandler.wizardNum];
+            BufferedImage b = sprite[SwingFrame.player];
             AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
             tx.translate(-b.getWidth(null), 0);
             AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-            sprite[HTTPRequestHandler.wizardNum] = op.filter(b, null);
+            sprite[SwingFrame.player] = op.filter(b, null);
         
     }
 
