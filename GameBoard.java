@@ -490,6 +490,7 @@ public class GameBoard extends JPanel implements ActionListener {
     }
 
     public void flipTheBits(BufferedImage[] images){
+        /**
         for(int i=0; i<9; i++){
 
             BufferedImage b = sprite[i];
@@ -498,6 +499,15 @@ public class GameBoard extends JPanel implements ActionListener {
             AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
             sprite[i] = op.filter(b, null);
         }
+        **/
+        
+        
+            BufferedImage b = sprite[HTTPRequestHandler.wizardNum];
+            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+            tx.translate(-b.getWidth(null), 0);
+            AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            sprite[HTTPRequestHandler.wizardNum] = op.filter(b, null);
+        
     }
 
     class MouseyMcMouseFace implements MouseListener

@@ -14,6 +14,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 public class HTTPRequestHandler extends AbstractHandler {
 
     private GameBoard board;
+    public static int wizardNum;
 
     public HTTPRequestHandler(GameBoard board)
     {
@@ -35,7 +36,8 @@ public class HTTPRequestHandler extends AbstractHandler {
         if (request.getRequestURI().startsWith("/map")) {
 
             System.out.println("Map request recieved from " + request.getRemoteAddr());
-
+            wizardNum = Integer.parseInt(request.getRemoteAddr().substring(7,7));
+            
             responseText.append(request.getRemoteAddr());
             responseText.append("~");
             int lastValue = -1;
