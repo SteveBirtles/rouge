@@ -123,7 +123,6 @@ public class HTTPRequestHandler extends AbstractHandler {
                     for (int y = 0; y < 512; y++) {          
                         synchronized(board) {
                             if(board.square[x][y] != 0){
-                                System.out.println("WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + board.square[x][y]);
                                 String wiz = Integer.toString(x) + "," + Integer.toString(y) + ","
                                     + Integer.toString(board.square[x][y]) + ",";
                                 if (board.playerFlipped[board.square[x][y] - 1] ) {
