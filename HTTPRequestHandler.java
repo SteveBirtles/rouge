@@ -72,7 +72,7 @@ public class HTTPRequestHandler extends AbstractHandler {
 
             }
 
-        } else if (request.getRequestURI().startsWith("/move")) {
+        } else if (request.getRequestURI().startsWith("/move")) { // If client requested to move
 
             if (request.getQueryString() != null)
             {
@@ -122,6 +122,7 @@ public class HTTPRequestHandler extends AbstractHandler {
                 for (int x = 0; x < 512; x++) {
                     for (int y = 0; y < 512; y++) {          
                         if(board.square[x][y] != 0){
+                            System.out.println("WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + board.square[x][y]);
                             String wiz = Integer.toString(x) + "," + Integer.toString(y) + ","
                                 + Integer.toString(board.square[x][y]) + ",";
                             if (board.playerFlipped[board.square[x][y] - 1] ) {
