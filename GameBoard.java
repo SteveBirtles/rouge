@@ -75,11 +75,11 @@ public class GameBoard extends JPanel implements ActionListener {
 
         for (int s = 0; s < 11; s++) {
 
-            BufferedImage b = sprite[SwingFrame.player][0];
+            BufferedImage b = sprite[s][0];
             AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
             tx.translate(-b.getWidth(null), 0);
             AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-            sprite[SwingFrame.player][1] = op.filter(b, null);
+            sprite[s][1] = op.filter(b, null);
 
         }
 
@@ -222,7 +222,7 @@ public class GameBoard extends JPanel implements ActionListener {
                             here = square[x + (int) cameraX][y + (int) cameraY];
 
                             if (here > 0) {
-                                int direction = playerFlipped[here] ? 1 : 0;
+                                int direction = playerFlipped[here - 1] ? 1 : 0;
                                 g.drawImage (sprite[here][direction], x * 64 - xNudge, y * 64 - yNudge, this);
                             }
 
@@ -390,7 +390,7 @@ public class GameBoard extends JPanel implements ActionListener {
                     wizType = Integer.parseInt(s);
                     square[wizX][wizY] = wizType;
                     case 3:
-                    playerFlipped[wizType] = Integer.parseInt(s) == 1;
+                    playerFlipped[wizType - 1] = Integer.parseInt(s) == 1;
                     wizBit = -1;
                     break;
                 }
