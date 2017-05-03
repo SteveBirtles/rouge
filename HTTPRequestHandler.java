@@ -121,19 +121,20 @@ public class HTTPRequestHandler extends AbstractHandler {
 
                 for (int x = 0; x < 512; x++) {
                     for (int y = 0; y < 512; y++) {          
-                        if(board.square[x][y] != 0){
-                            System.out.println("WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + board.square[x][y]);
-                            String wiz = Integer.toString(x) + "," + Integer.toString(y) + ","
-                                + Integer.toString(board.square[x][y]) + ",";
-                            if (board.playerFlipped[board.square[x][y] - 1] ) {
-                                wiz += "1,";
-                            } else {
-                                wiz +="0,";
+                        synchronized(board) {
+                            if(board.square[x][y] != 0){
+                                System.out.println("WAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + board.square[x][y]);
+                                String wiz = Integer.toString(x) + "," + Integer.toString(y) + ","
+                                    + Integer.toString(board.square[x][y]) + ",";
+                                if (board.playerFlipped[board.square[x][y] - 1] ) {
+                                    wiz += "1,";
+                                } else {
+                                    wiz +="0,";
+                                }
+                                responseText.append(wiz);                     
                             }
-                            responseText.append(wiz);                     
                         }
                     }
-
                 }
 
             }
